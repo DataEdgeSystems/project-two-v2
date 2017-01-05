@@ -1,6 +1,7 @@
 package net.kzn.collaborationbackend.daoimpl;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,13 @@ public class UserDAOImpl implements UserDAO {
 	public Boolean add(User user) {	
 		sessionFactory.getCurrentSession().persist(user);		
 		return true;
+	}
+
+	@Override
+	public User findByLogin(String login) {		
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM User WHERE login=:login");
+		query.setParameter("login", login);
+		return (User)query.getSingleResult();
 	}
 
 }

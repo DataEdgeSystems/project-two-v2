@@ -4,12 +4,13 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import net.kzn.collaborationbackend.config.HibernateConfig;
 import net.kzn.collaborationbackend.config.MvcConfig;
+import net.kzn.collaborationbackend.config.SecurityConfig;
 
 public class MvcWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] {HibernateConfig.class};
+		return new Class[] {HibernateConfig.class, SecurityConfig.class};
 	}
 
 	@Override

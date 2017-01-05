@@ -12,6 +12,7 @@
 	<properties>
 		<spring.version>4.3.4.RELEASE</spring.version>
 		<hibernate.version>5.2.5.Final</hibernate.version>
+		<spring.security.version>4.2.1.RELEASE</spring.security.version>		
 		<jackson.databind>2.8.5</jackson.databind>
 	</properties>
 
@@ -70,6 +71,22 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson.databind}</version>
 		</dependency>
+
+		<!-- Spring Security -->
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+
 	</dependencies>
 	<build>
 		<plugins>

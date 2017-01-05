@@ -298,6 +298,51 @@ public class HibernateConfig {
 
 
 
+# Setting up the spring security.
+1 - Add the following dependencies
+* Just above the dependencies element add to the properties element
+```XML
+	<properties>
+		...
+		<spring.security.version>4.2.1.RELEASE</spring.security.version>				
+	</properties>
+```
+```XML
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-config</artifactId>
+	<version>${spring.security.version}</version>
+</dependency>
+
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-web</artifactId>
+	<version>${spring.security.version}</version>
+</dependency>
+```
+2 - Create a SpringSecurityInitializer class which tells that we have to use the spring security to handle the security related concerns. It's like configuring the DelegatingFilterProxyChain.
+```Java
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+public class SecurityWebApplicationInitializer
+        extends AbstractSecurityWebApplicationInitializer {
+
+}
+```
+3- Create a SecurityConfig class that will define the various configuration to secure the RESTful application.
+```Java
+
+
+
+
+```
+
+
+
+
+
+
+
+
 
 
 

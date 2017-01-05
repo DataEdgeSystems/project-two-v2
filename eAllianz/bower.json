@@ -1,0 +1,25 @@
+{
+  "name": "eAllianz",
+  "homepage": "https://github.com/khozema-nullwala/project-two-v2",
+  "authors": [
+    "Khozema Nullwala <khozema.nullwala@gmail.com>"
+  ],
+  "description": "This is an angular application which is dependent on another restful application",
+  "main": "index.html",
+  "keywords": [
+    "Onlin",
+    "Collaboration"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.1"
+  }
+}
