@@ -338,6 +338,17 @@ public class SecurityWebApplicationInitializer
 
 
 
+X - We require four class to work with -
+
+	1. RestUnauthorizedEntryPoint - this class is needed because by default spring security serves the login page but we do not have a login page inside the rest api
+	2. RestAccessDeniedHandler - this class is required if the user try to access a rest api which requires valid credentials but the user does not have one.
+	3. RestAuthenticationFailureHandler - this class is required if the user does not have the right credentials to access the rest api.
+	4. RestAuthenticationSuccessHandler - this class is require if the user succeeds in providing the right credentials for login.
+
+
+
+
+
 
 
 

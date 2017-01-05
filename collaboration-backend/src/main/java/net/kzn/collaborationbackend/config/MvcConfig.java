@@ -14,6 +14,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @Import({SecurityConfig.class})
 @ComponentScan("net.kzn.collaborationbackend.controller")
+
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
 	// Configuration to load the static resources	

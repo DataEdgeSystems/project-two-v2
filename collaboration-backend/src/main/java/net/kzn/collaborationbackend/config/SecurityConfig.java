@@ -15,7 +15,6 @@ import net.kzn.collaborationbackend.security.SecurityUserDetailsService;
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackages = {"net.kzn.collaborationbackend.security"})
-
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -34,11 +33,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}	
 			
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		
+	protected void configure(HttpSecurity http) throws Exception {		
         http
         	.formLogin()
-		.and()
+/*		.and()
+			.authorizeRequests()
+				.antMatchers("/**")
+					.permitAll()
+*/		.and()		
 			.authorizeRequests()
         		.anyRequest()
         			.authenticated();

@@ -13,9 +13,4 @@ public class TestController {
 		return "index";
 	}
 
-	@RequestMapping("/user")
-	public Principal user(Principal user) {
-		return user;
-	}
-
 }

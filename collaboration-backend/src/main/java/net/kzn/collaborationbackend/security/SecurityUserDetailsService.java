@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import net.kzn.collaborationbackend.dao.UserDAO;
 import net.kzn.collaborationbackend.entity.User;
+
+
+@ComponentScan(basePackages={"net.kzn.collaborationbackend.daoimpl"})
 @Service("securityUserDetailsService")
 public class SecurityUserDetailsService implements UserDetailsService {
 
