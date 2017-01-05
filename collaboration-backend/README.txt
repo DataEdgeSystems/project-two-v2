@@ -207,14 +207,12 @@ Solution
 		<artifactId>spring-orm</artifactId>
 		<version>${spring.version}</version>		
 	</dependency>
-
 	<!-- Hibernate -->
 	<dependency>
 	    <groupId>org.hibernate</groupId>
 	    <artifactId>hibernate-core</artifactId>
 	    <version>${hibernate.version}</version>
 	</dependency>
-
 	<!-- Jackson Databind -->
 	<dependency>
 	    <groupId>com.fasterxml.jackson.core</groupId>
@@ -224,12 +222,84 @@ Solution
 ```
 You can read about more about jackson databind [here](http://tutorials.jenkov.com/java-json/index.html)
 
-2. Create a separate HibernateConfig class inside the config package and add it to the MvcWebApplicationInitializer.
+2 - Create a separate HibernateConfig class inside the config package and add it to the MvcWebApplicationInitializer.
 ```Java
+package net.kzn.collaborationbackend.config;
 
+import java.util.Properties;
 
+import javax.sql.DataSource;
 
+import org.hibernate.SessionFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+@Configuration
+@EnableTransactionManagement
+@ComponentScan("net.kzn.collaborationbackend.entity")
+public class HibernateConfig {	
+	private final static String DRIVER_CLASS = "oracle.jdbc.driver.OracleDriver";
+	private final static String DATABASE_URL = "jdbc:oracle:thin:@localhost:1521:orcl";
+	private final static String DATABASE_USERNAME = "username";
+	private final static String DATABASE_PASSWORD = "password";
+	private final static String DATABASE_DIALECT = "org.hibernate.dialect.Oracle10gDialect";
+	
+	// Setup the dataSource bean
+	@Bean
+	public DataSource getDataSource(){	
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();		
+		dataSource.setDriverClassName(DRIVER_CLASS);
+		dataSource.setUrl(DATABASE_URL);
+		dataSource.setUsername(DATABASE_USERNAME);
+		dataSource.setPassword(DATABASE_PASSWORD);				
+		return dataSource;
+	}
+	
+	// Setup the sessionFactory bean	
+	@Bean
+	public SessionFactory getSessionFactory(DataSource dataSource) {		
+		LocalSessionFactoryBuilder sessionFactoryBuilder = new LocalSessionFactoryBuilder(dataSource);		
+		sessionFactoryBuilder.addProperties(getHibernateProperties());
+		sessionFactoryBuilder.scanPackages("net.kzn.collaborationbackend.entity");		
+		return sessionFactoryBuilder.buildSessionFactory();
+	}
+
+	// Setup the transactionManager bean
+	@Bean
+	public HibernateTransactionManager getHibernateTransactionManager(SessionFactory sessionFactory) {		
+		HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
+		return transactionManager;		
+	}		
+
+	// return the hibernate properties
+	// the only property that needs to be set is dialect
+	// other are helper properties to log the details
+	private Properties getHibernateProperties() {
+		Properties properties = new Properties();				
+		properties.put("hibernate.dialect", DATABASE_DIALECT);
+		properties.put("hibernate.show_sql", "true");
+		properties.put("hibernate.format_sql", "true");		
+		return properties;
+	}
+}
 ```
+3 - Adding it to the MvcWebApplicationInitializer in the following method.
+```Java
+	@Override
+	protected Class<?>[] getRootConfigClasses() {
+		return new Class[] {HibernateConfig.class};
+	}
+```
+
+
+
+
+
+
 
 

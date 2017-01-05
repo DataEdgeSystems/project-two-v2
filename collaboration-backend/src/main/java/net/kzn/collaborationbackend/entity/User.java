@@ -1,31 +1,23 @@
 package net.kzn.collaborationbackend.entity;
 
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "user_details")
 public class User {
 
 	@Id
-	@GenericGenerator(name = "generator", strategy = "increment")
-	@GeneratedValue(generator = "generator")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
+	@SequenceGenerator(name = "generator", sequenceName="users_seq", allocationSize = 1)
 	@Column(name = "id", nullable = false)
 	private Long id;
 
@@ -41,9 +33,6 @@ public class User {
 	@Column(name = "phone", nullable = false)
 	private String phone;
 
-	@Column(name = "language", nullable = false)
-	private String language;
-	
 	@Column(name = "id_picture")
 	private String pictureId;
 
@@ -53,17 +42,27 @@ public class User {
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	@Column(name = "birth_date")
-	@Temporal(TemporalType.DATE)
-	private Date birthDate;
+	@Column(name = "birth_date")	
+	private LocalDate birthDate;
 
 	@Column(name = "enabled")
 	private Boolean enabled;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "users_authority", joinColumns = { @JoinColumn(name = "id_user", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "id_authority", table = "authority", referencedColumnName = "id") })
-	private Set<Authority> authorities = new HashSet<Authority>();
+	@Column(name = "role")
+	private String role;	
+	
+	public String getRole() {
+		return role;
+	}
 
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -104,20 +103,12 @@ public class User {
 		this.password = password;
 	}
 
-	public Date getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
-	}
-
-	public Set<Authority> getAuthorities() {
-		return authorities;
-	}
-
-	public void setAuthorities(Set<Authority> authorities) {
-		this.authorities = authorities;
 	}
 
 	public Boolean getEnabled() {
@@ -134,14 +125,6 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
 	}
 
 	public String getPhone() {
