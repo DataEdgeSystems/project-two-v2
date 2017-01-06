@@ -336,17 +336,118 @@ public class SecurityWebApplicationInitializer
 
 ```
 
-
-
 X - We require four class to work with -
 
 	1. RestUnauthorizedEntryPoint - this class is needed because by default spring security serves the login page but we do not have a login page inside the rest api
 	2. RestAccessDeniedHandler - this class is required if the user try to access a rest api which requires valid credentials but the user does not have one.
 	3. RestAuthenticationFailureHandler - this class is required if the user does not have the right credentials to access the rest api.
 	4. RestAuthenticationSuccessHandler - this class is require if the user succeeds in providing the right credentials for login.
+```Java
 
 
 
+
+```
+Create two model class to hold the data related to response and error if any. Use the SecurityUtils class to send the response.
+```Java
+
+
+
+
+
+```
+```Java
+
+
+
+
+
+```
+```Java
+
+
+
+
+
+```
+
+```Java
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+
+public class RestUnauthorizedEntryPoint implements AuthenticationEntryPoint {
+
+	@Override
+	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException ex)
+			throws IOException, ServletException {				
+		SecurityUtils.sendError(response, ex, HttpServletResponse.SC_UNAUTHORIZED, "AUTHENTICATION FAILED");		
+	}
+
+}
+```
+```Java
+
+```
+
+
+
+# Solving the CORS Issue
+ 1 - What is CORS?
+ 
+ 2 - Create a filter class and implement the Filter interface and define the abstract method setting the various headers realted to CORS.
+
+```Java
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
+
+public class CORSFilter implements Filter {
+
+	@Override
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+			throws IOException, ServletException {
+		        System.out.println("Filtering on...");
+        HttpServletResponse response = (HttpServletResponse) res;
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "X-requested-with, Content-Type");
+        chain.doFilter(req, res);
+
+	}
+
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {}
+	@Override
+	public void destroy() {}
+
+}
+```
+ 3 - After creating the above class add it to the MvcWebApplicationInitializer
+ ```Java
+ 	
+ 	@Override
+	protected Filter[] getServletFilters() {
+		Filter [] singleton  = {new CORSFilter()};
+		return singleton;
+	}
+ 
+ ```
+ 4 - Once completed the above step comment out the InternalResourceViewResolver and other code added initially cause we would be having the front-end entirely using angular application. 
+ 
+ 
 
 
 
