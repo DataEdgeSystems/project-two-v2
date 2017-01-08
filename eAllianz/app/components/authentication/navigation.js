@@ -6,9 +6,9 @@ AuthenticationModule.controller('navigation',['$scope','$rootScope','$http','$lo
 
     var authenticate = function(callback) {
 
-    $http.get(REST_URI+'user').then(function(data) {           
-       
-      if (data.name) {
+    $http.get(REST_URI+'user').then(function(response) {           
+      debugger; 
+      if (response.data.name) {
         $rootScope.authenticated = true;
       } else {
         $rootScope.authenticated = false;

@@ -48,23 +48,22 @@ public class SecurityUtils {
 	 * Generates the response that needs to be send once any errors occurs
 	 * */
 	public static void sendError(HttpServletResponse response, Exception exception, int status, String message) throws IOException{
+		// The response would be only in JSON so that we can handle it
+		// while calling it from a front-end client and take appropriate action
 		response.setContentType("application/json;charset=UTF-8");
 		response.setStatus(status);
 		SecurityError error = new SecurityError("authError", exception.getMessage());
 		PrintWriter writer = response.getWriter();
 		writer.write(mapper.writeValueAsString(new Response(status,message,error)));
 		writer.flush();
-		writer.close();
-		
-		
-	}
-	
-
+		writer.close();				
+	}	
 	
 	/*
 	 * Generates the response that needs to be send once authentication is successful
 	 * */
 	public static void sendResponse(HttpServletResponse response, int status, Object object) throws IOException {
+		// when the authentication is successful we will send the entire object in JSON format.
 		response.setContentType("application/json;charset=UTF-8");
 		response.setStatus(status);
 		PrintWriter writer = response.getWriter();

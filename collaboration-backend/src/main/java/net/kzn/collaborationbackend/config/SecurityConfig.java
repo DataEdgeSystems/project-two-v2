@@ -11,13 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
-import net.kzn.collaborationbackend.filter.CsrfHeaderFilter;
+import net.kzn.collaborationbackend.filter.CorsFilter;
 import net.kzn.collaborationbackend.security.SecurityUserDetailsService;
 
 @Configuration
@@ -78,7 +76,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        .and()
 //        	.csrf().csrfTokenRepository(csrfTokenRepository())
         .and()
-        	.logout();
+        	.logout()
+        .and()
+        	.addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class);
 //        .and()
 //        	.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
         		

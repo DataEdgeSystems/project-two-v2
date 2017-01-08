@@ -1,7 +1,10 @@
 /**
  * Loading all the routes here
  */
-CollaborationApp.config(['$routeProvider', '$locationProvider',function($routeProvider,$locationProvider){
+CollaborationApp.config(['$routeProvider', '$locationProvider', '$httpProvider',function($routeProvider,$locationProvider,$httpProvider){
+
+    // allows the cookie with session id to be send back
+    $httpProvider.defaults.withCredentials = true;
 
     $routeProvider
     .when('/home',{

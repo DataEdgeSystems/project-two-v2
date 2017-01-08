@@ -458,5 +458,9 @@ public class CORSFilter implements Filter {
 
 
 
+Useful link for Creating the User Profile Page along with file-upload feature : -
 
+http://stackoverflow.com/questions/21015891/spring-mvc-angularjs-file-upload-org-apache-commons-fileupload-fileuploade
+http://www.uncorkedstudios.com/blog/multipartformdata-file-upload-with-angularjs/
+http://ng.malsup.com/#!/$parse-and-$eval
 
