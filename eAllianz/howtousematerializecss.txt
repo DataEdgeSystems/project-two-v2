@@ -1,0 +1,9 @@
+To create a side navigation bar use the following hierarchy in the class : -
+ul - side-nav
+
+    ul - collapsible collapsible-accordion
+
+        li
+            a - collapsible-header
+            
+

@@ -1,0 +1,17 @@
+#wrapper, footer {
+    padding-left: 300px;
+}
+
+/*
+Min-Width: Refers to everything greater than or equal to the amount given. 
+Max-Width: Refers to everything less than or equal to the amount given.
+*/
+@media only screen and (max-width : 992px) {
+    #wrapper, footer {
+        padding-left: 0;
+    }
+}
+
+.side-collapse {
+    margin: 0 18px;
+}

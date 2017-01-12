@@ -1,5 +1,6 @@
-var AuthenticationModule = angular.module('AuthenticationModule',[]);
-AuthenticationModule.controller('navigation',['$scope','$rootScope','$http','$location',function($scope,$rootScope,$http,$location){
+
+
+AuthenticationModule.controller('AuthenticationController',['$scope','$rootScope','$http','$location',function($scope,$rootScope,$http,$location){
 
 
     var REST_URI = 'http://localhost:8080/collaboration-backend/'
