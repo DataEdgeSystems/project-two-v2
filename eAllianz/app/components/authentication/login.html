@@ -1,14 +1,32 @@
-<div class="alert alert-danger" ng-show="error">
-    There was a problem logging in. Please try again.
+<div class="container">
+    <div class="row">
+        <h1 class="center logo">eAllianz</h1>
+        <hr/>
+        <div class="col offset-s3 s6">
+            <div class="card-panel red center" ng-show="authCtrl.error">
+                <span class="white-text">Invalid Credentials. Please try again!</span>
+            </div>
+            <div class="card blue darken-3">
+                <div class="card-content">
+                    <span class="card-title whitecmd-text logo">Enter Login Details</span>                    
+                    <form role="form" ng-submit="authCtrl.login()">
+                        <div class="input-field">
+                            <input type="text" class="white-text" id="username" name="username" ng-model="authCtrl.credentials.username" />
+                            <label for="username" class="white-text">Username</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" class="white-text" id="password" name="password" ng-model="authCtrl.credentials.password" />
+                            <label for="password" class="white-text">Password</label>
+                        </div>
+                        <button type="submit" class="btn grey">Login</button>
+                    </form>
+                </div>
+                <div class="card-action">
+                        New User ? &#160;&#160; <a href="#!/register" class="white-text logo">Register Here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
-<form role="form" ng-submit="login()">
-    <div class="form-group">
-        <label for="login">login:</label> <input type="text" class="form-control" id="login" name="login" ng-model="credentials.login"
-        />
-    </div>
-    <div class="form-group">
-        <label for="password">Password:</label> <input type="password" class="form-control" id="password" name="password"
-            ng-model="credentials.password" />
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>

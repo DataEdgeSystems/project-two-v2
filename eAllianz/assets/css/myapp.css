@@ -1,17 +1,30 @@
-#wrapper, footer {
-    padding-left: 300px;
-}
-
 /*
 Min-Width: Refers to everything greater than or equal to the amount given. 
 Max-Width: Refers to everything less than or equal to the amount given.
 */
 @media only screen and (max-width : 992px) {
-    #wrapper, footer {
+    .left-padding, footer {
         padding-left: 0;
     }
 }
-
+.left-padding, footer {
+    padding-left: 300px;
+}
 .side-collapse {
     margin: 0 18px;
+}
+
+
+ /* label focus color */
+   .input-field input[type=text]:focus + label, .input-field input[type=password]:focus + label {
+     color: #fff;
+}
+/* label underline focus color */
+   .input-field input[type=text]:focus, .input-field input[type=password]:focus {
+     border-bottom: 1px solid #fff;
+     box-shadow: 0 1px 0 0 #fff;
+   }
+
+.logo {
+    font-family: 'Gloria Hallelujah', cursive;
 }

@@ -4,7 +4,7 @@ window.routes =
     "/home": {
         templateUrl: 'app/components/user/home.html', 
         controller: 'UserController', 
-        controllerAs: 'usrCtrl',
+        controllerAs: 'userCtrl',
         requireLogin: true,
         role: 'USER'
     },
@@ -50,8 +50,12 @@ CollaborationApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
 
 }]);
 
-CollaborationApp.run(function($rootScope,AuthenticationService) {
+// The REST endpoint to get the data from the server
+CollaborationApp.constant('REST_URI', 'http://localhost:8080/collaboration-backend/');
 
+// When the app runs check whether the user navigating through the website is
+// authenticated and authorized to view the exisiting page
+CollaborationApp.run(function($rootScope,AuthenticationService) {
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
         // iterate through all the routes
         for(var i in window.routes) {
@@ -70,7 +74,6 @@ CollaborationApp.run(function($rootScope,AuthenticationService) {
             }
         }
     });
-
 });
  
 

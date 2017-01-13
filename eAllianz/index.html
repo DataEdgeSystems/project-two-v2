@@ -7,6 +7,7 @@
     <link href="bower_components/materialize/dist/css/materialize.css" rel="stylesheet">
     <link href="assets/css/myapp.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet"> 
     <!-- Loading the angular script -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
@@ -29,9 +30,9 @@
     </style>
 </head>
 
-<body ng-app="hello" ng-cloak class="ng-cloak">
+<body ng-cloak class="ng-cloak">
 
-    <!-- Displays the side navigation bar when the hamburger button is clicked -->
+    <!-- User entire profile will be visible in the sidebar once the user authenticates -->
     <ul id="slide-out" class="side-nav fixed" ng-if="authenticated">
         <li>
             <div class="userView">
@@ -51,8 +52,10 @@
         <li><a class="subheader">Subheader</a></li>
         <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
     </ul>
+    <!-- end of sidebar -->
 
-    <div id="wrapper" ng-if="authenticated">
+    <!-- navbar will be visible only after the authentication is successful-->
+    <div class="left-padding" ng-if="authenticated">
         <nav>
             <div class="nav-wrapper">
                 <a href="#!" class="brand-logo right hide-on-med-and-down">eAllianz</a>
@@ -74,8 +77,10 @@
             </div>
         </nav>
     </div>
+    <!-- end of navbar -->
 
-    <div ng-view id="wrapper" class="container"></div>
+    <!-- To load the content dynamically for a single page application -->
+    <div ng-view></div>
 
     <script src="bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
     <!--<script src="bower_components/bootstrap/dist/js/bootstrap.js" type="text/javascript"></script>    -->
