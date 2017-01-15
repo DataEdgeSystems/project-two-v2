@@ -19,10 +19,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class HibernateConfig {
 	
 	private final static String DRIVER_CLASS = "oracle.jdbc.driver.OracleDriver";
-	private final static String DATABASE_URL = "jdbc:oracle:thin:@172.23.79.102:1521:orcl1";
-	private final static String DATABASE_USERNAME = "hr";
-	private final static String DATABASE_PASSWORD = "niit";
 	private final static String DATABASE_DIALECT = "org.hibernate.dialect.Oracle10gDialect";
+
+//	private final static String DATABASE_URL = "jdbc:oracle:thin:@172.23.79.102:1521:orcl1";
+//	private final static String DATABASE_USERNAME = "hr";
+//	private final static String DATABASE_PASSWORD = "niit";
+
+	private final static String DATABASE_URL = "jdbc:oracle:thin:@localhost:1521:xe";
+	private final static String DATABASE_USERNAME = "system";
+	private final static String DATABASE_PASSWORD = "oraclexe";
 	
 	// Setup the dataSource bean
 	@Bean

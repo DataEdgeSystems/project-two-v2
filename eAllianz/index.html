@@ -20,8 +20,18 @@
     <script src="app/components/authentication/authenticationService.js"></script>
     <script src="app/components/authentication/authenticationController.js"></script>
 
+    <!-- Loading the admin module -->
+    <script src="app/components/admin/adminService.js"></script>
+    <script src="app/components/admin/adminController.js"></script>
+
+    <!-- Loading the user module -->
     <script src="app/components/user/userService.js"></script>
     <script src="app/components/user/userController.js"></script>
+
+    <!-- Loading the blog module -->
+    <script src="app/components/blog/blogService.js"></script>
+    <script src="app/components/blog/blogController.js"></script>
+
 
     <style type="text/css">
         [ng\:cloak], [ng-cloak], .ng-cloak {
@@ -31,53 +41,6 @@
 </head>
 
 <body ng-cloak class="ng-cloak">
-
-    <!-- User entire profile will be visible in the sidebar once the user authenticates -->
-    <ul id="slide-out" class="side-nav fixed" ng-if="authenticated">
-        <li>
-            <div class="userView">
-                <div class="background">
-                    <img src="images/office.jpg">
-                </div>
-                <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
-                <a href="#!name"><span class="white-text name">John Doe</span></a>
-                <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
-            </div>
-        </li>
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-        <li><a href="#!">Second Link</a></li>
-        <li>
-            <div class="divider"></div>
-        </li>
-        <li><a class="subheader">Subheader</a></li>
-        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-    </ul>
-    <!-- end of sidebar -->
-
-    <!-- navbar will be visible only after the authentication is successful-->
-    <div class="left-padding" ng-if="authenticated">
-        <nav>
-            <div class="nav-wrapper">
-                <a href="#!" class="brand-logo right hide-on-med-and-down">eAllianz</a>
-                <a href="#!" class="brand-logo hide-on-large-only">eAllianz</a>
-                <a href="#!" data-activates="mobile-demo" class="button-collapse right"><i class="material-icons">menu</i></a>
-                <a ng-if="authenticated" href="#!" data-activates="slide-out" class="side-collapse left hide-on-large-only"><i class="material-icons">low_priority</i></a>
-                <ul class="left hide-on-med-and-down">
-                    <li><a href="sass.html">Sass</a></li>
-                    <li><a href="badges.html">Components</a></li>
-                    <li><a href="collapsible.html">Javascript</a></li>
-                    <li><a href="mobile.html">Mobile</a></li>
-                </ul>
-                <ul class="side-nav" id="mobile-demo">
-                    <li><a href="sass.html">Sass</a></li>
-                    <li><a href="badges.html">Components</a></li>
-                    <li><a href="collapsible.html">Javascript</a></li>
-                    <li><a href="mobile.html">Mobile</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-    <!-- end of navbar -->
 
     <!-- To load the content dynamically for a single page application -->
     <div ng-view></div>

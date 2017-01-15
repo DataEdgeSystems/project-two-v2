@@ -1,3 +1,10 @@
+.left-padding, footer {
+    padding-left: 300px;
+}
+.side-collapse {
+    margin: 0 18px;
+}
+
 /*
 Min-Width: Refers to everything greater than or equal to the amount given. 
 Max-Width: Refers to everything less than or equal to the amount given.
@@ -6,12 +13,6 @@ Max-Width: Refers to everything less than or equal to the amount given.
     .left-padding, footer {
         padding-left: 0;
     }
-}
-.left-padding, footer {
-    padding-left: 300px;
-}
-.side-collapse {
-    margin: 0 18px;
 }
 
 

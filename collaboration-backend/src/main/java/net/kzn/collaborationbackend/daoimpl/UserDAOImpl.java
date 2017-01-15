@@ -20,13 +20,19 @@ public class UserDAOImpl implements UserDAO {
 	public Boolean add(User user) {	
 		sessionFactory.getCurrentSession().persist(user);		
 		return true;
-	}
+	} 
 
 	@Override
 	public User findByLogin(String login) {		
 		Query query = sessionFactory.getCurrentSession().createQuery("FROM User WHERE login=:login");
 		query.setParameter("login", login);
-		return (User)query.getSingleResult();
+		try {
+			return (User)query.getSingleResult();	
+		}
+		catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+		return null;
 	}
 
 }

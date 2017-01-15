@@ -3,7 +3,6 @@ AuthenticationModule.service('AuthenticationService',['$http','$q','REST_URI',fu
     
     var userIsAuthenticated = false;
     var role = 'GUEST';
-
     var user = {};
     
 
@@ -58,7 +57,6 @@ AuthenticationModule.service('AuthenticationService',['$http','$q','REST_URI',fu
         );
 
         return deffered.promise;
-
     }
 
 }]);

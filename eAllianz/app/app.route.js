@@ -1,12 +1,20 @@
 // list the routes here for user to navigate through the website.
 window.routes =
 {
-    "/home": {
+    "/user/home": {
         templateUrl: 'app/components/user/home.html', 
         controller: 'UserController', 
         controllerAs: 'userCtrl',
         requireLogin: true,
-        role: 'USER'
+        roles: ['USER']
+    },
+
+    "/admin/home": {
+        templateUrl: 'app/components/admin/home.html', 
+        controller: 'AdminController', 
+        controllerAs: 'adminCtrl',
+        requireLogin: true,
+        roles: ['ADMIN']
     },
 
     "/login": {
@@ -14,23 +22,30 @@ window.routes =
         controller: 'AuthenticationController', 
         controllerAs: 'authCtrl',
         requireLogin: false,
-        role: 'GUEST'
+        roles: ['GUEST']
     },
     "/register": {
         templateUrl: 'app/components/authentication/register.html', 
         controller: 'AuthenticationController', 
         controllerAs: 'authCtrl',
         requireLogin: false,
-        role: 'GUEST'
+        roles: ['GUEST']
     },
-    "/error/403": {
-        templateUrl: 'app/components/authentication/unauthorized.html', 
+    "/error": {
+        templateUrl: 'app/components/authentication/error.html', 
         controller: 'AuthenticationController', 
         controllerAs: 'authCtrl',
         requireLogin: false,
-        role: 'GUEST'
-    }    
-
+        roles: ['GUEST']
+    },
+    "/blogs": {
+        templateUrl: 'app/components/blog/listblog.html', 
+        controller: 'BlogController', 
+        controllerAs: 'blogCtrl',
+        requireLogin: true,
+        roles: ['USER','ADMIN']
+    },
+    
 };
 
 /**
@@ -55,24 +70,26 @@ CollaborationApp.constant('REST_URI', 'http://localhost:8080/collaboration-backe
 
 // When the app runs check whether the user navigating through the website is
 // authenticated and authorized to view the exisiting page
-CollaborationApp.run(function($rootScope,AuthenticationService) {
+CollaborationApp.run(function($rootScope,$location,AuthenticationService) {
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
+        
         // iterate through all the routes
         for(var i in window.routes) {
-            // if routes is present make sure 
-            // the user is authenticated before login in
-            // using the session service
-            if(next.indexOf(i)!=-1) {
-                if(window.routes[i].requireLogin && !AuthenticationService.getUserIsAuthenticated()) {
-                    $location.path("/login");
+            // if routes is present make sure the user is authenticated 
+            // before login using the authentication service            
+            if(next.indexOf(i)!=-1) {                
+                // if trying to access page which requires login and is not logged in                                
+                if(window.routes[i].requireLogin && !AuthenticationService.getUserIsAuthenticated()) {                    
                     event.preventDefault();
+                    $location.path('/login');
                 }
-                else if(AuthenticationService.getUserIsAuthenticated() && AuthenticationService.getRole() !== window.routes[i].role ) {
-                    $location.path("/error/403");
-                    event.preventDefault(); 
-                }
+                else if((AuthenticationService.getUserIsAuthenticated()) 
+                        &&
+                        (window.routes[i].roles.indexOf(AuthenticationService.getRole())==-1)) {
+                        $location.path('/error');
+                }                
             }
-        }
+        }        
     });
 });
  

@@ -2,6 +2,8 @@ var CollaborationApp = angular.module('CollaborationApp',
                 [                    
                     'ngRoute',    
                     'AuthenticationModule',
-                    'UserModule'
+                    'AdminModule',
+                    'BlogModule',
+                    'UserModule',
                 ]
 );
