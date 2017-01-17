@@ -45,6 +45,13 @@ window.routes =
         requireLogin: true,
         roles: ['USER','ADMIN']
     },
+    "/forums": {
+        templateUrl: 'app/components/forums/listforum.html', 
+        controller: 'ForumController', 
+        controllerAs: 'forumCtrl',
+        requireLogin: true,
+        roles: ['USER','ADMIN']
+    },
     
 };
 
@@ -71,8 +78,7 @@ CollaborationApp.constant('REST_URI', 'http://localhost:8080/collaboration-backe
 // When the app runs check whether the user navigating through the website is
 // authenticated and authorized to view the exisiting page
 CollaborationApp.run(function($rootScope,$location,AuthenticationService) {
-    $rootScope.$on('$locationChangeStart', function(event, next, current) {
-        
+    $rootScope.$on('$locationChangeStart', function(event, next, current) {    
         // iterate through all the routes
         for(var i in window.routes) {
             // if routes is present make sure the user is authenticated 
@@ -91,6 +97,7 @@ CollaborationApp.run(function($rootScope,$location,AuthenticationService) {
             }
         }        
     });
+
 });
  
 

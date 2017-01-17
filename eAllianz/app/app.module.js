@@ -4,6 +4,7 @@ var CollaborationApp = angular.module('CollaborationApp',
                     'AuthenticationModule',
                     'AdminModule',
                     'BlogModule',
+                    'ForumModule',
                     'UserModule',
                 ]
 );
