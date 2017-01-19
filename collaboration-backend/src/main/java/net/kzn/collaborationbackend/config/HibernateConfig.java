@@ -21,13 +21,13 @@ public class HibernateConfig {
 	private final static String DRIVER_CLASS = "oracle.jdbc.driver.OracleDriver";
 	private final static String DATABASE_DIALECT = "org.hibernate.dialect.Oracle10gDialect";
 
-//	private final static String DATABASE_URL = "jdbc:oracle:thin:@172.23.79.102:1521:orcl1";
-//	private final static String DATABASE_USERNAME = "hr";
-//	private final static String DATABASE_PASSWORD = "niit";
+	private final static String DATABASE_URL = "jdbc:oracle:thin:@172.23.79.102:1521:orcl1";
+	private final static String DATABASE_USERNAME = "hr";
+	private final static String DATABASE_PASSWORD = "niit";
 
-	private final static String DATABASE_URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private final static String DATABASE_USERNAME = "system";
-	private final static String DATABASE_PASSWORD = "oraclexe";
+//	private final static String DATABASE_URL = "jdbc:oracle:thin:@localhost:1521:xe";
+//	private final static String DATABASE_USERNAME = "system";
+//	private final static String DATABASE_PASSWORD = "oraclexe";
 	
 	// Setup the dataSource bean
 	@Bean
@@ -43,7 +43,7 @@ public class HibernateConfig {
 		return dataSource;
 	}
 	
-	
+	// Setup the sessionFactory bean	
 	@Bean
 	public SessionFactory getSessionFactory(DataSource dataSource) {		
 		LocalSessionFactoryBuilder sessionFactoryBuilder = new LocalSessionFactoryBuilder(dataSource);		
@@ -51,14 +51,15 @@ public class HibernateConfig {
 		sessionFactoryBuilder.scanPackages("net.kzn.collaborationbackend.entity");		
 		return sessionFactoryBuilder.buildSessionFactory();
 	}
-	
+
+	// Setup the transactionManager bean	
 	@Bean
 	public HibernateTransactionManager getHibernateTransactionManager(SessionFactory sessionFactory) {		
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
 		return transactionManager;		
 	}
 
-	// 
+	// We can set the hibernate properties here
 	private Properties getHibernateProperties() {
 		Properties properties = new Properties();				
 		properties.put("hibernate.dialect", DATABASE_DIALECT);

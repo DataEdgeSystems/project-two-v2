@@ -35,4 +35,18 @@ public class UserDAOImpl implements UserDAO {
 		return null;
 	}
 
+	@Override
+	public void updateUserIsOnline(User user) {
+		String updateQuery = "UPDATE User SET isOnline = :isOnline WHERE id = :id";
+		Query query = sessionFactory.getCurrentSession().createQuery(updateQuery);
+		query.setParameter("id", user.getId());
+		query.setParameter("isOnline", user.getIsOnline());		
+		try {
+			query.executeUpdate();	
+		}
+		catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}	
+	}
+
 }

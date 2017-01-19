@@ -3,15 +3,18 @@
         <li>
             <div class="userView">
                 <div class="background">
-                    <img src="images/office.jpg">
+                    <img ng-src="assets/images/background.png">
                 </div>
-                <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
-                <a href="#!name"><span class="white-text name">John Doe</span></a>
-                <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                <a href="#!user"><img class="circle" ng-src="assets/images/{{user.pictureId}}"></a>
+                <a href="#!name"><span class="black-text name">{{user.firstName}} {{user.familyName}}</span></a>
+                <a href="#!email"><span class="black-text email">{{user.email}}</span></a>
             </div>
         </li>
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-        <li><a href="#!">Second Link</a></li>
+        <li ng-if="user.role == 'ADMIN'"><a href="#!">User Activation</a></li>
+        <li ng-if="user.role == 'ADMIN'"><a href="#!">Blog Approval</a></li>
+        <li ng-if="user.role == 'ADMIN'"><a href="#!">Forum Creation</a></li>
+        <li ng-if="user.role == 'ADMIN'"><a href="#!">Add Events</a></li>
+        <li ng-if="user.role == 'ADMIN'"><a href="#!">Add Job</a></li>
         <li>
             <div class="divider"></div>
         </li>

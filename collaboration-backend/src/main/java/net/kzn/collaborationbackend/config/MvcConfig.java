@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 @Configuration
 @EnableWebMvc
-//@Import({SecurityConfig.class})
 @ComponentScan("net.kzn.collaborationbackend.controller")
 
 public class MvcConfig extends WebMvcConfigurerAdapter {

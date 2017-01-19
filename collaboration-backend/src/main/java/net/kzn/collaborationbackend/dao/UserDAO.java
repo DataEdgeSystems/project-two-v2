@@ -8,4 +8,6 @@ public interface UserDAO {
 
 	User findByLogin(String login);
 	
+	void updateUserIsOnline(User user);
+	
 }

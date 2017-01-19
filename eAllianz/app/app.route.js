@@ -78,13 +78,21 @@ CollaborationApp.constant('REST_URI', 'http://localhost:8080/collaboration-backe
 // When the app runs check whether the user navigating through the website is
 // authenticated and authorized to view the exisiting page
 CollaborationApp.run(function($rootScope,$location,AuthenticationService) {
+
+    //set up the rootScope with values here
+    $rootScope.message = false;
+
     $rootScope.$on('$locationChangeStart', function(event, next, current) {    
         // iterate through all the routes
         for(var i in window.routes) {
             // if routes is present make sure the user is authenticated 
             // before login using the authentication service            
             if(next.indexOf(i)!=-1) {                
-                // if trying to access page which requires login and is not logged in                                
+                // if trying to access page which requires login and is not logged in                                 
+                debugger;
+                $rootScope.user = AuthenticationService.loadUserFromCookie();                
+                console.log($rootScope.user);
+
                 if(window.routes[i].requireLogin && !AuthenticationService.getUserIsAuthenticated()) {                    
                     event.preventDefault();
                     $location.path('/login');
@@ -97,6 +105,21 @@ CollaborationApp.run(function($rootScope,$location,AuthenticationService) {
             }
         }        
     });
+
+
+    $rootScope.logout = function() {
+        // call the logout  function created in AuthenticationService
+        AuthenticationService.logout()
+        .then(
+            // function callback
+            function(message) {
+                $rootScope.message = message;
+                $rootScope.authenticated = false;
+                $location.path('/login');
+            }
+        );
+
+    };
 
 });
  

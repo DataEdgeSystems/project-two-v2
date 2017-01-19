@@ -39,6 +39,8 @@ public class UserTestCase {
 		user.setLogin("admin");
 		user.setPassword("admin");
 		user.setPhone("9189000000");
+		user.setStatus("APPROVED");
+		user.setIsOnline(false);
 		user.setRole("ADMIN");
 		user.setPictureId("admin.png");
 				

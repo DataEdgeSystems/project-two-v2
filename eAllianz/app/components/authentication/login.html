@@ -2,10 +2,13 @@
     <div class="row">
         <h1 class="center logo">eAllianz</h1>
         <hr/>
-        <div class="col offset-s3 s6">
+        <div class="col offset-m2 offset-l3 l6 m8 s12">
             <div class="card-panel red center" ng-show="authCtrl.error">
                 <span class="white-text">Invalid Credentials. Please try again!</span>
             </div>
+            <div class="card-panel green center" ng-if="message">
+                <span class="white-text">{{message}}</span>
+            </div>            
             <div class="card blue darken-3">
                 <div class="card-content">
                     <span class="card-title whitecmd-text logo">Enter Login Details</span>                    

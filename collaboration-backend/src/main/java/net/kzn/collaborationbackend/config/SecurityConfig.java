@@ -14,6 +14,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import net.kzn.collaborationbackend.filter.CorsFilter;
 import net.kzn.collaborationbackend.security.SecurityUserDetailsService;
@@ -38,7 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationFailureHandler restAuthenticationFailureHandler;	
 	
-	
+	@Autowired
+	private LogoutSuccessHandler restLogoutSuccessHandler;
+    
 	// Default constructor just to check 
 	// if spring security has kicked in
 	public SecurityConfig() {
@@ -77,6 +80,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        	.csrf().csrfTokenRepository(csrfTokenRepository())
         .and()
         	.logout()
+        		.logoutSuccessHandler(restLogoutSuccessHandler)
+        	
         .and()
         	.addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class);
 //        .and()

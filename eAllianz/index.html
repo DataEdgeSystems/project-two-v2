@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet"> 
     <!-- Loading the angular script -->
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
 
     <!-- Loading the modules and routes -->
@@ -23,7 +24,7 @@
     <!-- Loading the admin module -->
     <script src="app/components/admin/adminService.js"></script>
     <script src="app/components/admin/adminController.js"></script>
-
+ 
     <!-- Loading the user module -->
     <script src="app/components/user/userService.js"></script>
     <script src="app/components/user/userController.js"></script>
@@ -47,9 +48,9 @@
 </head>
 
 <body ng-cloak class="ng-cloak">        
-    <!-- To load the content dynamically for a single page application -->
+    <!-- To load the sidebar content dynamically for a single page application -->
     <div ng-include="'app/components/shared/sidebar.html'"></div>
-    
+    <!-- To load the navigation bar content dynamically for a single page application -->
     <div ng-include="'app/components/shared/navbar.html'" class="left-padding"></div>
 
     <div ng-view></div>    

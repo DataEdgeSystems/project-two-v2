@@ -28,11 +28,12 @@ public class SecurityUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String login)
 	        throws UsernameNotFoundException {
 	    User user = userDAO.findByLogin(login);
-	    System.out.println("User : "+user);
+	    System.out.println("User : " + user);
 	    if(user==null){
 	        System.out.println("User not found");
-	        throw new UsernameNotFoundException("Username not found");
+	        throw new UsernameNotFoundException("Username not found!");
 	    }
+	    		    	
 	        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), 
 	             user.getEnabled(), true, true, true, getGrantedAuthorities(user));
 	}

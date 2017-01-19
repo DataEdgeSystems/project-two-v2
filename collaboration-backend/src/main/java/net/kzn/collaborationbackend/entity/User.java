@@ -50,13 +50,35 @@ public class User {
 
 	@Column(name = "role")
 	private String role;	
+
+	@Column(name = "status")
+	private String status;	
 	
+	@Column(name = "is_online")
+	private Boolean isOnline;	
+		
 	public String getRole() {
 		return role;
 	}
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Boolean getIsOnline() {
+		return isOnline;
+	}
+
+	public void setIsOnline(Boolean isOnline) {
+		this.isOnline = isOnline;
 	}
 
 	public void setId(Long id) {
