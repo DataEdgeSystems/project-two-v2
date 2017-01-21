@@ -2,21 +2,9 @@ var AuthenticationModule = angular.module('AuthenticationModule',['ngCookies']);
 AuthenticationModule.service('AuthenticationService',['$http','$q','$cookies','REST_URI',function($http,$q,$cookies,REST_URI) {    
     
     var userIsAuthenticated = false;
-    var role = 'GUEST';
-    var me = this;
+    var role = 'GUEST';    
     var user = false;
         
-    this.loadUserFromCookie = function() {
-        user = ($cookies.get('user'));
-        if(user){
-            me.setUserIsAuthenticated(true);
-            me.setRole(user.role);
-        }
-        else {
-            me.setUserIsAuthenticated(false);             
-        }        
-        return user;
-    }
 
     /** 
      * Setters and Getters for user
@@ -89,14 +77,44 @@ AuthenticationModule.service('AuthenticationService',['$http','$q','$cookies','R
             method: 'GET',
             url: REST_URI + 'logout',        
         }).then(function(response){
-            console.log(response);
-            me.setUserIsAuthenticated(false);
-            me.setRole('GUEST');
+            //console.log(response);
+            $cookies.putObject('user', undefined);
+            userIsAuthenticated  = false;
+            role = 'GUEST';
             deferred.resolve(response.data);
         });
 
         return deferred.promise;
     }
 
+
+    this.loadUserFromCookie = function() {
+        user = $cookies.getObject('user');
+        if(user){
+            userIsAuthenticated = true;
+            role = user.role;
+        }
+        else {
+            userIsAuthenticated = false;
+            role = 'GUEST';
+        }        
+        return user;
+    }
+
+
+
+    /**
+     * Save the user into the cookie and 
+     * fill the other details for the fields inside AuthenticationService
+     * 
+    */
+
+    this.saveUser = function(user) {
+        // save the user inside the cookie
+        $cookies.putObject('user',user);
+        role = user.role;
+        userIsAuthenticated = true;        
+
+    }
 
 }]);

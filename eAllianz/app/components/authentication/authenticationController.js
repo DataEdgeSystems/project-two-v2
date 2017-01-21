@@ -6,20 +6,13 @@ AuthenticationModule.controller('AuthenticationController',['AuthenticationServi
 
     // Credentials required inside the login.html
     me.credentials = {};
-    me.error = false;
-    me.user = {};    
+    me.error = false;    
 
     me.login = function(){
       AuthenticationService.login(me.credentials)
         .then(
           function(user){                  
-            AuthenticationService.setUserIsAuthenticated(true);            
-            AuthenticationService.setRole(user.role);
-            AuthenticationService.setUser(user);
-            $cookies.put('user',user);
-            $rootScope.authenticated = true;
-            $rootScope.message = 'Welcome ' + user.firstName + ' ' + user.familyName;            
-            console.log(user);
+            AuthenticationService.saveUser(user);
             switch(user.role) {
               case 'ADMIN':
                 $location.path('/admin/home');
@@ -40,9 +33,5 @@ AuthenticationModule.controller('AuthenticationController',['AuthenticationServi
           }
         )
     };
-
-    me.fillUser = function(user) {
-      
-    }
       
 }]);

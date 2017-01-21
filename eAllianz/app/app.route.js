@@ -89,12 +89,12 @@ CollaborationApp.run(function($rootScope,$location,AuthenticationService) {
             // before login using the authentication service            
             if(next.indexOf(i)!=-1) {                
                 // if trying to access page which requires login and is not logged in                                 
-                debugger;
-                $rootScope.user = AuthenticationService.loadUserFromCookie();                
-                console.log($rootScope.user);
-
+                //debugger;
+                $rootScope.user = AuthenticationService.loadUserFromCookie();
+                $rootScope.authenticated = AuthenticationService.getUserIsAuthenticated();
+                
+                
                 if(window.routes[i].requireLogin && !AuthenticationService.getUserIsAuthenticated()) {                    
-                    event.preventDefault();
                     $location.path('/login');
                 }
                 else if((AuthenticationService.getUserIsAuthenticated()) 
@@ -114,7 +114,6 @@ CollaborationApp.run(function($rootScope,$location,AuthenticationService) {
             // function callback
             function(message) {
                 $rootScope.message = message;
-                $rootScope.authenticated = false;
                 $location.path('/login');
             }
         );
