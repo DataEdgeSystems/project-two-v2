@@ -20,16 +20,6 @@ public class AuthenticationController {
 	@Autowired
 	private UserDAO userDAO;
 	
-	@GetMapping
-	public ResponseEntity<?> home() {
-		return ResponseEntity.ok("SUCCESS");
-	}
-
-	@GetMapping(value="/user")
-	public Principal getPrincipalUser(Principal user) {
-		return user;
-	}
-
 	@PostMapping(value="/checkLogin")
 	public ResponseEntity<User> checkLogin(@RequestBody String login) {	
 		System.out.println(login);
@@ -39,8 +29,7 @@ public class AuthenticationController {
 		}
 		else {
 			return new ResponseEntity<User>(HttpStatus.FOUND);
-		}
-				
+		}			
 	}
 	
 	
