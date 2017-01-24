@@ -15,17 +15,71 @@ Max-Width: Refers to everything less than or equal to the amount given.
     }
 }
 
-
- /* label focus color */
-   .input-field input[type=text]:focus + label, .input-field input[type=password]:focus + label {
-     color: #fff;
-}
-/* label underline focus color */
-   .input-field input[type=text]:focus, .input-field input[type=password]:focus {
-     border-bottom: 1px solid #fff;
-     box-shadow: 0 1px 0 0 #fff;
-   }
-
 .logo {
     font-family: 'Gloria Hallelujah', cursive;
 }
+
+/* For login form */
+#login input {
+    color: #fff;
+}
+
+/* For registration form*/
+#register input {
+    color: #fff;
+}
+
+/* For all the forms */
+
+.invalid-data {   
+     color: #fff;  
+     margin-top: -15px;
+     font-size: 1.0em;
+}
+
+/* label color */
+.input-field label {
+    color: #fff;
+}
+/* label focus color */
+.input-field input[type=text]:focus + label,  
+.input-field input[type=password]:focus + label,
+.input-field input[type=email]:focus + label  
+{
+    color: #fff;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus,
+.input-field input[type=password]:focus,
+.input-field input[type=email]:focus
+{
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
+}
+/* valid color */
+.input-field input[type=text].valid {
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
+}
+/* invalid color */
+.input-field input[type=text].invalid,
+.input-field input[type=password].invalid,
+.input-field input[type=email].invalid
+{
+    border-bottom: 1px solid #f00;
+    box-shadow: 0 1px 0 0 #f00;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: #fff;
+}
+
+input.ng-dirty.ng-invalid, .confirmPassword {
+    border-bottom: 1px solid #f00;
+    box-shadow: 0 1px 0 0 #f00;
+}
+input.ng-dirty.ng-valid {
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
+}
+    

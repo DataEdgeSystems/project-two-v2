@@ -11,20 +11,20 @@
             </div>            
             <div class="card blue darken-3">
                 <div class="card-content">
-                    <span class="card-title whitecmd-text logo">Enter Login Details</span>                    
-                    <form role="form" ng-submit="authCtrl.login()">
+                    <span class="card-title logo">Enter Login Details</span>                    
+                    <form role="form" ng-submit="authCtrl.login()" id="login">
                         <div class="input-field">
-                            <input type="text" class="white-text" id="username" name="username" ng-model="authCtrl.credentials.username" />
-                            <label for="username" class="white-text">Username</label>
+                            <input type="text" class="" id="username" name="username" ng-model="authCtrl.credentials.username" />
+                            <label for="username" class="">Username</label>
                         </div>
                         <div class="input-field">
-                            <input type="password" class="white-text" id="password" name="password" ng-model="authCtrl.credentials.password" />
-                            <label for="password" class="white-text">Password</label>
-                        </div>
+                            <input type="password" class="" id="password" name="password" ng-model="authCtrl.credentials.password" />
+                            <label for="password" class="">Password</label>
+                        </div>                                                
                         <button type="submit" class="btn grey">Login</button>
                     </form>
                 </div>
-                <div class="card-action">
+                <div class="card-action right-align">
                         New User ? &#160;&#160; <a href="#!/register" class="white-text logo">Register Here</a>
                 </div>
             </div>

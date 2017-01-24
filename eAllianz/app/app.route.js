@@ -1,22 +1,13 @@
 // list the routes here for user to navigate through the website.
 window.routes =
 {
-    "/user/home": {
-        templateUrl: 'app/components/user/home.html', 
-        controller: 'UserController', 
-        controllerAs: 'userCtrl',
+    "/home": {
+        templateUrl: 'app/components/page/home.html', 
+        controller: 'AuthenticationController', 
+        controllerAs: 'authCtrl',
         requireLogin: true,
-        roles: ['USER']
+        roles: ['USER','ADMIN']
     },
-
-    "/admin/home": {
-        templateUrl: 'app/components/admin/home.html', 
-        controller: 'AdminController', 
-        controllerAs: 'adminCtrl',
-        requireLogin: true,
-        roles: ['ADMIN']
-    },
-
     "/login": {
         templateUrl: 'app/components/authentication/login.html', 
         controller: 'AuthenticationController', 
@@ -68,7 +59,7 @@ CollaborationApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
         $routeProvider.when(path,window.routes[path]);
     }
 
-    $routeProvider.otherwise({redirectTo: '/login'});
+    $routeProvider.otherwise({redirectTo: '/home'});
 
 }]);
 
@@ -79,8 +70,6 @@ CollaborationApp.constant('REST_URI', 'http://localhost:8080/collaboration-backe
 // authenticated and authorized to view the exisiting page
 CollaborationApp.run(function($rootScope,$location,AuthenticationService) {
 
-    //set up the rootScope with values here
-    $rootScope.message = false;
 
     $rootScope.$on('$locationChangeStart', function(event, next, current) {    
         // iterate through all the routes
@@ -93,8 +82,7 @@ CollaborationApp.run(function($rootScope,$location,AuthenticationService) {
                 $rootScope.user = AuthenticationService.loadUserFromCookie();
                 $rootScope.authenticated = AuthenticationService.getUserIsAuthenticated();
                 
-                
-                if(window.routes[i].requireLogin && !AuthenticationService.getUserIsAuthenticated()) {                    
+                if(window.routes[i].requireLogin && !AuthenticationService.getUserIsAuthenticated()) {                                   
                     $location.path('/login');
                 }
                 else if((AuthenticationService.getUserIsAuthenticated()) 

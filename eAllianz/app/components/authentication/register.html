@@ -2,27 +2,123 @@
     <div class="row">
         <h1 class="center logo">eAllianz</h1>
         <hr/>
-        <div class="col offset-s3 s6">
+        <div class="s12 m12 l12">
             <div class="card blue darken-3">
-                <div class="card-content">
-                    <span class="card-title whitecmd-text logo">Enter Login Details</span>                    
-                    <form role="form" ng-submit="authCtrl.login()">
-                        <div class="input-field">
-                            <input type="text" class="white-text" id="username" name="username" ng-model="authCtrl.credentials.username" />
-                            <label for="username" class="white-text">Username</label>
+                <div class="card-content">                    
+                    <span class="card-title white-text logo">Enter Registration Details</span>                    
+
+                    <!--Registration details form -->
+
+                    <form role="form" name="register" ng-submit="register.$valid && authCtrl.register()" id="register" novalidate="novalidate">
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">account_box</i>
+                                <input type="text" id="login" name="login" ng-model="authCtrl.user.login" ng-blur="authCtrl.checkLogin()" required/>
+                                <label for="login">Login Name</label>
+                                <div class="invalid-data right-align" ng-show="register.login.$dirty">
+                                    <span ng-show="register.login.$invalid && !authCtrl.loginExist">Please select a name for login!</span>
+                                    <span ng-show="authCtrl.loginExist">Please select different login name!</span>
+                                </div>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">mail</i>
+                                <input type="email" id="email" name="email" ng-model="authCtrl.user.email" requried />
+                                <label for="email">Email</label>
+                                <div class="invalid-data right-align" ng-show="register.email.$dirty">
+                                    <span ng-show="register.email.$invalid">Please enter valid email id!</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-field">
-                            <input type="password" class="white-text" id="password" name="password" ng-model="authCtrl.credentials.password" />
-                            <label for="password" class="white-text">Password</label>
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">lock</i>
+                                <input type="password" id="password" name="password" ng-model="authCtrl.user.password" required/>
+                                <label for="password">Password</label>                            
+
+                                <div class="invalid-data right-align" ng-show="register.password.$dirty">
+                                    <span ng-show="register.password.$invalid">Please enter password!</span>                                    
+                                </div>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">lock</i>
+                                <input type="password" id="confirmPassword" name="confirmPassword" ng-model="confirmPassword" required ng-class="{ 'confirmPassword' : (authCtrl.user.password !== confirmPassword)}"/>
+                                <label for="confirmPassword">Confirm Password</label>
+                                
+                                <div class="invalid-data right-align" ng-show="register.confirmPassword.$dirty">
+                                    <span ng-show="register.confirmPassword.$invalid">Please enter confirm password!</span>
+                                    <span ng-show="(!register.confirmPassword.$invalid) && (authCtrl.user.password !== confirmPassword)">Confirm password does not match!</span>
+                                </div>
+                            </div>
                         </div>
-                        <button type="submit" class="btn grey">Login</button>
+
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input type="text" class="validate" id="firstName" name="firstName" ng-model="authCtrl.user.firstName" required />
+                                <label for="firstName">First Name</label>                                                            
+                                <div class="invalid-data right-align" ng-show="register.firstName.$dirty">
+                                    <span ng-show="register.firstName.$invalid">Please enter First Name!</span>
+                                </div>
+                            </div>                        
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input type="text" id="familyName" name="familyName" ng-model="authCtrl.user.familyName" required/>
+                                <label for="familyName">Family Name</label>                                
+                                <div class="invalid-data right-align" ng-show="register.familyName.$dirty">
+                                    <span ng-show="register.familyName.$invalid">Please enter Last Name!</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">                        
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">call</i>
+                                <input type="text" id="phone" name="phone" ng-model="authCtrl.user.phone" required ng-pattern="/^[0-9]{10}$/"/>
+                                <label for="phone">Contact Number</label>
+                                <div class="invalid-data right-align" ng-show="register.phone.$dirty">                                    
+                                    <span ng-show="register.phone.$invalid">Please enter valid phone number!</span>
+                                </div>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">date_range</i>
+                                <input type="text" id="birthDate" name="birthDate" ng-model="authCtrl.user.birthDate" required class="datepicker"/>
+                                <label for="birthDate">Birth Date</label>
+                                <div class="invalid-data right-align" ng-show="register.birthDate.$dirty">                         
+                                    <span ng-show="register.birthDate.$invalid">Please enter valid birth date!</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">account_box</i>
+                                <select name="role" id="role" ng-model="authCtrl.user.role" ng-required="true">
+                                    <option value="" disabled selected>Choose your role</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                    <option value="USER">USER</option>
+                                    <option value="STAFF">STAFF</option>
+                                </select>
+                                <label for="role">Role</label>
+                                <div class="invalid-data right-align" ng-show="register.role.$dirty">
+                                    <span ng-show="register.role.$touched && register.role.$invalid">Please select your role!</span>
+                                </div>
+                            </div>                            
+                        </div>
+                        <div class="row">
+                            <div class="col s12 m12 l12 center-align">
+                                <button class="btn grey waves-effect waves-light" type="submit" ng-disabled="register.$invalid">Register</button>
+                            </div>
+                        </div>
                     </form>
+
+                    <hr>
+
                 </div>
-                <div class="card-action">
-                        New User ? &#160;&#160; <a href="#!/register" class="white-text logo">Register Here</a>
+                <div class="card-action right-align">
+                        Existing User ? &#160;&#160; <a href="#!/login" class="white-text logo">Login</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 

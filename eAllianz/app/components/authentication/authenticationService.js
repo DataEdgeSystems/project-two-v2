@@ -117,4 +117,24 @@ AuthenticationModule.service('AuthenticationService',['$http','$q','$cookies','R
 
     }
 
+    this.checkLogin = function(login) {
+        var deferred = $q.defer();
+        $http.post(REST_URI + 'guest/checkLogin',login, {
+             headers: {
+                 'Content-Type': undefined
+            }
+        })
+        .then(
+            function(response){                
+                deferred.resolve(response);
+            },
+            function(error){                
+                deferred.resolve(error);
+            }
+        );
+
+        return deferred.promise;
+    }
+
+
 }]);

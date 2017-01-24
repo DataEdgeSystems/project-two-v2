@@ -8,6 +8,12 @@
     <link href="assets/css/myapp.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet"> 
+
+    <!-- Loading all the scripts -->
+    <script src="bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
+    <!--<script src="bower_components/bootstrap/dist/js/bootstrap.js" type="text/javascript"></script>    -->
+    <script src="bower_components/materialize/dist/js/materialize.js" type="text/javascript"></script>
+
     <!-- Loading the angular script -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -19,7 +25,7 @@
 
     <!-- Loading the authentication module -->
     <script src="app/components/authentication/authenticationService.js"></script>
-    <script src="app/components/authentication/authenticationController.js"></script>
+    <script src="app/components/authentication/authenticationController.js"></script>    
 
     <!-- Loading the admin module -->
     <script src="app/components/admin/adminService.js"></script>
@@ -36,6 +42,8 @@
     <!-- Loading the forum module -->
     <script src="app/components/forums/forumService.js"></script>
     <script src="app/components/forums/forumController.js"></script>
+
+    <script src="assets/js/myapp.js" type="text/javascript"></script>
 
 
     <style type="text/css">
@@ -55,12 +63,6 @@
 
     <div ng-view></div>    
 
-
-
-    <script src="bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
-    <!--<script src="bower_components/bootstrap/dist/js/bootstrap.js" type="text/javascript"></script>    -->
-    <script src="bower_components/materialize/dist/js/materialize.js" type="text/javascript"></script>
-    <script src="assets/js/myapp.js" type="text/javascript"></script>
 
 </body>
 
