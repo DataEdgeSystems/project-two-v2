@@ -27,14 +27,14 @@ public class SecurityUserDetailsService implements UserDetailsService {
 	// Return the UserDetails object by providing your own custom logic	
 	public UserDetails loadUserByUsername(String login)
 	        throws UsernameNotFoundException {
-	    User user = userDAO.findByLogin(login);
+	    User user = userDAO.findByUsername(login);
 	    System.out.println("User : " + user);
 	    if(user==null){
 	        System.out.println("User not found");
 	        throw new UsernameNotFoundException("Username not found!");
 	    }
 	    		    	
-	        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), 
+	        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), 
 	             user.getEnabled(), true, true, true, getGrantedAuthorities(user));
 	}
 

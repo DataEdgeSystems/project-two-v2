@@ -46,7 +46,7 @@ AuthenticationModule.service('AuthenticationService',['$http','$q','$cookies','R
             method: 'POST',
             url: REST_URI + 'login',
             headers: {
-                'Content-type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
             transformRequest: function(obj) {
                 var t = [];
@@ -66,7 +66,6 @@ AuthenticationModule.service('AuthenticationService',['$http','$q','$cookies','R
                 deferred.reject(error)
             }
         );
-
         return deferred.promise;
     }
 
@@ -117,13 +116,11 @@ AuthenticationModule.service('AuthenticationService',['$http','$q','$cookies','R
 
     }
 
-    this.checkLogin = function(login) {
+
+    // check if the username already exists
+    this.checkUsername = function(username) {
         var deferred = $q.defer();
-        $http.post(REST_URI + 'guest/checkLogin',login, {
-             headers: {
-                 'Content-Type': undefined
-            }
-        })
+        $http.post(REST_URI + 'guest/check-username',username)
         .then(
             function(response){                
                 deferred.resolve(response);
@@ -133,6 +130,21 @@ AuthenticationModule.service('AuthenticationService',['$http','$q','$cookies','R
             }
         );
 
+        return deferred.promise;
+    }
+
+    // register the user
+    this.register = function(user){
+        var deferred = $q.defer();
+        $http.post(REST_URI + 'guest/register', user)
+        .then(
+            function(response) {
+                deferred.resolve(response.status);
+            },
+            function(error) {
+                deferred.reject(error);
+            }
+        );
         return deferred.promise;
     }
 

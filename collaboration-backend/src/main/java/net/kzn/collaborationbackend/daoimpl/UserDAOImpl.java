@@ -1,5 +1,7 @@
 package net.kzn.collaborationbackend.daoimpl;
 
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,9 @@ public class UserDAOImpl implements UserDAO {
 	} 
 
 	@Override
-	public User findByLogin(String login) {		
-		Query query = sessionFactory.getCurrentSession().createQuery("FROM User WHERE login=:login");
-		query.setParameter("login", login);
+	public User findByUsername(String username) {		
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM User WHERE username=:username");
+		query.setParameter("username", username);
 		try {
 			return (User)query.getSingleResult();	
 		}
@@ -47,6 +49,18 @@ public class UserDAOImpl implements UserDAO {
 		catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}	
+	}
+
+	
+	/*
+	 * Fetch the user for activation
+	 * */
+	@Override
+	public List<User> listUserForActivation() {		
+		String selectQuery = "FROM User WHERE status = :status";
+		Query query = sessionFactory.getCurrentSession().createQuery(selectQuery);
+		query.setParameter("status", "PENDING");		
+		return query.list();
 	}
 
 }

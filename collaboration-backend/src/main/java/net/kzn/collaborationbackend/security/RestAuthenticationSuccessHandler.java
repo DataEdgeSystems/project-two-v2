@@ -24,7 +24,7 @@ public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		
-		User user = userDAO.findByLogin(authentication.getName());
+		User user = userDAO.findByUsername(authentication.getName());
 		// after the successful login set the user as online
 		user.setIsOnline(true);
 		// then update the user in the database

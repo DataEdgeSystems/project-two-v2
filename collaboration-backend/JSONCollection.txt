@@ -1,0 +1,12 @@
+----------- for registering the user ---------
+{
+	"firstName":"Pooja",
+	"familyName":"Gadekar",
+	"email":"pooja.gadekar@gmail.com",
+	"phone":"9819000000",
+	"username":"puju",
+	"password":"puju",
+	"birthDate":"1995-09-28",
+	"role":"USER",
+	"gender":"F"
+}

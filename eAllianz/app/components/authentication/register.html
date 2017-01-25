@@ -13,11 +13,11 @@
                         <div class="row">
                             <div class="input-field col s12 m6">
                                 <i class="material-icons prefix">account_box</i>
-                                <input type="text" id="login" name="login" ng-model="authCtrl.user.login" ng-blur="authCtrl.checkLogin()" required/>
-                                <label for="login">Login Name</label>
-                                <div class="invalid-data right-align" ng-show="register.login.$dirty">
-                                    <span ng-show="register.login.$invalid && !authCtrl.loginExist">Please select a name for login!</span>
-                                    <span ng-show="authCtrl.loginExist">Please select different login name!</span>
+                                <input type="text" id="username" name="username" ng-model="authCtrl.user.username" ng-blur="authCtrl.checkUsername()" required/>
+                                <label for="username">Username</label>
+                                <div class="invalid-data right-align" ng-show="register.username.$dirty">
+                                    <span ng-show="register.username.$invalid && !authCtrl.usernameExist">Please select a username!</span>
+                                    <span ng-show="authCtrl.usernameExist">Please select different username!</span>
                                 </div>
                             </div>
                             <div class="input-field col s12 m6">
@@ -102,6 +102,18 @@
                                     <span ng-show="register.role.$touched && register.role.$invalid">Please select your role!</span>
                                 </div>
                             </div>                            
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">account_box</i>
+                                <select name="gender" id="gender" ng-model="authCtrl.user.gender" ng-required="true">
+                                    <option value="" disabled selected>Choose your gender</option>
+                                    <option value="M">MALE</option>
+                                    <option value="F">FEMALE</option>                                    
+                                </select>
+                                <label for="gender">Gender</label>
+                                <div class="invalid-data right-align" ng-show="register.gender.$dirty">
+                                    <span ng-show="register.gender.$touched && register.gender.$invalid">Please select your gender!</span>
+                                </div>
+                            </div> 
                         </div>
                         <div class="row">
                             <div class="col s12 m12 l12 center-align">

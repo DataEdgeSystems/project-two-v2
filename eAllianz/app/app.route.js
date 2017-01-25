@@ -8,6 +8,13 @@ window.routes =
         requireLogin: true,
         roles: ['USER','ADMIN']
     },
+    "/admin/user/activate": {
+        templateUrl: 'app/components/admin/useractivation.html', 
+        controller: 'AdminController', 
+        controllerAs: 'adminCtrl',
+        requireLogin: true,
+        roles: ['ADMIN']
+    },
     "/login": {
         templateUrl: 'app/components/authentication/login.html', 
         controller: 'AuthenticationController', 
@@ -77,8 +84,7 @@ CollaborationApp.run(function($rootScope,$location,AuthenticationService) {
             // if routes is present make sure the user is authenticated 
             // before login using the authentication service            
             if(next.indexOf(i)!=-1) {                
-                // if trying to access page which requires login and is not logged in                                 
-                //debugger;
+                // if trying to access page which requires login and is not logged in                                                 
                 $rootScope.user = AuthenticationService.loadUserFromCookie();
                 $rootScope.authenticated = AuthenticationService.getUserIsAuthenticated();
                 

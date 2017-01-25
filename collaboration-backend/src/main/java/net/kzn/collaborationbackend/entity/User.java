@@ -36,8 +36,8 @@ public class User {
 	@Column(name = "id_picture")
 	private String pictureId;
 
-	@Column(name = "login", nullable = false)
-	private String login;
+	@Column(name = "username", nullable = false)
+	private String username;
 
 	@Column(name = "password", nullable = false)
 	private String password;
@@ -55,8 +55,19 @@ public class User {
 	private String status;	
 	
 	@Column(name = "is_online")
-	private Boolean isOnline;	
-		
+	private Boolean isOnline;
+	
+	@Column(name = "gender")
+	private Character gender;
+			
+	public Character getGender() {
+		return gender;
+	}
+
+	public void setGender(Character gender) {
+		this.gender = gender;
+	}
+
 	public String getRole() {
 		return role;
 	}
@@ -109,12 +120,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -164,5 +175,14 @@ public class User {
 	public void setPictureId(String pictureId) {
 		this.pictureId = pictureId;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", familyName=" + familyName + ", email=" + email
+				+ ", phone=" + phone + ", pictureId=" + pictureId + ", username=" + username + ", password=" + password
+				+ ", birthDate=" + birthDate + ", enabled=" + enabled + ", role=" + role + ", status=" + status
+				+ ", isOnline=" + isOnline + ", gender=" + gender + "]";
+	}
+
 	
 }

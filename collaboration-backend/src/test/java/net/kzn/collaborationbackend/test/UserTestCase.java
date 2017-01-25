@@ -36,7 +36,8 @@ public class UserTestCase {
 		user.setEnabled(true);
 		user.setFamilyName("Nullwala");
 		user.setFirstName("Khozema");
-		user.setLogin("admin");
+		user.setUsername("admin");
+		user.setGender(Character.valueOf('M'));
 		user.setPassword("admin");
 		user.setPhone("9189000000");
 		user.setStatus("APPROVED");

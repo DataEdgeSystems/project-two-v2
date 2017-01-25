@@ -25,7 +25,7 @@ public class RestLogoutSuccessHandler implements LogoutSuccessHandler {
 			throws IOException, ServletException {
 
 		// Fetch the user and set the user isOnline property as false
-		User user = userDAO.findByLogin(authentication.getName());
+		User user = userDAO.findByUsername(authentication.getName());
 		if(user!=null) {
 			// if user is already logged in
 			// after the successful login set the user as online		
@@ -35,7 +35,7 @@ public class RestLogoutSuccessHandler implements LogoutSuccessHandler {
 			System.out.println("Logout Success Handler Called!");
 			request.getSession().invalidate();
 
-			SecurityUtils.sendResponse(response, HttpServletResponse.SC_OK, new String(user.getLogin() + " successfully logout!"));					
+			SecurityUtils.sendResponse(response, HttpServletResponse.SC_OK, new String(user.getUsername() + " successfully logout!"));					
 		}
 		else {
 			SecurityUtils.sendResponse(response, HttpServletResponse.SC_OK, new String("Already logout!"));

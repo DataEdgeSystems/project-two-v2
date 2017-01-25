@@ -72,16 +72,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     			.accessDeniedHandler(restAccessDeniedHandler)
         .and()
         	.formLogin()
-        		.usernameParameter("username")
-        		.passwordParameter("password")
         		.successHandler(restAuthenticationSuccessHandler)
         		.failureHandler(restAuthenticationFailureHandler)
 //        .and()
 //        	.csrf().csrfTokenRepository(csrfTokenRepository())
         .and()
         	.logout()
-        		.logoutSuccessHandler(restLogoutSuccessHandler)
-        	
+        		.logoutSuccessHandler(restLogoutSuccessHandler)        	
         .and()
         	.addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class);
 //        .and()
@@ -106,11 +103,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //	}
 
 	// FOR ALLOWING CORS
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-	  web
-	    .ignoring()
-	       .antMatchers(HttpMethod.OPTIONS, "/**"); 
-	}
+//	@Override
+//	public void configure(WebSecurity web) throws Exception {
+//	  web
+//	    .ignoring()
+//	       .antMatchers(HttpMethod.OPTIONS, "/**"); 
+//	}
 
 }
