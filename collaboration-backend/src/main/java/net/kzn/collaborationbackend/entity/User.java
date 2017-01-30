@@ -1,6 +1,7 @@
 package net.kzn.collaborationbackend.entity;
 
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -13,7 +14,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user_details")
-public class User {
+public class User implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7895286519038449356L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")

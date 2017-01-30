@@ -21,5 +21,18 @@ AdminModule.controller('AdminController',['AdminService','$rootScope','$timeout'
     // call the method to get the users for activation
     me.getUsersForActivation();
 
+    me.approveUser = function(userId) {
+        //console.log(userId);
+        AdminService.approveUser(userId)
+        .then(
+            function(response) {                
+                $rootScope.message = response.message;
+            },
+            function(error) {
+                $rootScope.message = error.message;
+            }
+        );
+    }    
+
 }]);
 

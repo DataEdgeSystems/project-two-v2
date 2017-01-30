@@ -21,4 +21,20 @@ AdminModule.service('AdminService', ['REST_URI','$http','$q',function(REST_URI,$
     }
 
 
+    // return the text after approving the user
+    this.approveUser = function(id) {
+        var deferred = $q.defer();
+        $http.put(REST_URI + 'admin/approve-user', id)
+        .then(
+            function(response) {
+                console.log(response);
+                deferred.resolve(response.data);
+            },
+            function(error){
+                deferred.reject(error);
+            }
+        );
+        return deferred.promise;
+    }
+
 }]);

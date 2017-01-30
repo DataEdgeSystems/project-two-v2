@@ -472,6 +472,162 @@ http://ng.malsup.com/#!/$parse-and-$eval
 
 
 
+# Sending Email
+
+
+References: -
+
+
+* http://chariotsolutions.com/blog/post/sending-mail-via-gmail-javamail/
+* https://github.com/google/gmail-oauth2-tools/wiki/OAuth2DotPyRunThrough (use python v2.4 or higher not version 3.X)
+* https://www.google.com/settings/security/lesssecureapps
+ 1 - First exclude the following dependency from the javaee-api 
+```XML	
+	<dependency>
+		<groupId>javax</groupId>
+		<artifactId>javaee-api</artifactId>
+		<version>7.0</version>
+		<scope>provided</scope>
+		<exclusions>
+			<exclusion>
+				<artifactId>javax.mail</artifactId>
+				<groupId>com.sun.mail</groupId>
+			</exclusion>
+		</exclusions>
+	</dependency>
+```	 
+ 2 - Add the following dependency to the `pom.xml` file
+```XML
+	<dependency>
+	    <groupId>javax.mail</groupId>
+	    <artifactId>mail</artifactId>
+	    <version>1.4.7</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context-support</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>javax.mail</groupId>
+	    <artifactId>javax.mail-api</artifactId>
+	    <version>1.5.6</version>
+	</dependency>
+```  
+ 3. Create a class called as `EmailConfig` and add it to the `MvcWebApplicationInitializer`
+```Java
+import java.util.Properties;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+@Configuration
+@ComponentScan("net.kzn.collaborationbackend.service")
+public class EmailConfig {
+	
+	@Bean("mailSender")
+	public JavaMailSender getMailSender() {
+		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();						
+		mailSender.setHost("smtp.gmail.com");
+		mailSender.setPort(587);
+		mailSender.setUsername("your_email_account");
+		mailSender.setPassword("your_password");
+		mailSender.setJavaMailProperties(getMailProperties());				
+		return mailSender;
+	}
+
+	private Properties getMailProperties() {
+		Properties mailProperties = new Properties();		
+		mailProperties.put("mail.transport.protocol", "smtp");
+		mailProperties.put("mail.smtp.auth", "true");
+		mailProperties.put("mail.smtp.starttls.enable", "true");
+		mailProperties.put("mail.debug", "true");
+		return mailProperties;
+	}		
+}
+``` 
+```Java
+public class MvcWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+	@Override
+	protected Class<?>[] getRootConfigClasses() {
+		return new Class[] {...,..., EmailConfig.class};
+	}
+...
+}
+```
+4. In the service package create an EmailService class as shown below
+```Java
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+
+import net.kzn.collaborationbackend.entity.User;
+
+@Service("emailService")
+public class EmailService {
+	
+	// Autowired the mail sender bean here
+
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	// email name which is not similar to the username
+	private static String from = "eAllianz";
+	
+	/**
+	 * approvedUserMessage method will be called using emailService that can be Autowired 
+	 * in the AdminController once the user is approved by admin with the given role	 
+	 * args - User 
+	 * requires the user object to fetch the email and other content of the user to send the email
+	 * Similarly we can create other methods for different purposes   
+	 * */
+	public void approvedUserMessage(User user){
+	   	   
+	    // Mime message is used to send email like an HTML page	    
+	    MimeMessage mimeMessage = mailSender.createMimeMessage();
+	    
+	    MimeMessageHelper helper = null;
+	    
+		try {
+		
+			// instantiating the helper and attaching it with mimeMessage
+			helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
+
+			// set up your HTML message here
+			StringBuilder htmlMsg = new StringBuilder();
+			
+			htmlMsg.append("<h1>Welcome " + user.getFirstName()+ " " + user.getFamilyName() + "!</h1>");
+			htmlMsg.append("<p>Your account has been activated!</p><br/>");
+			htmlMsg.append("<p>Thanks for joining with us!</p><br/>");			
+			
+			// add the HTML content to the mimeMessage 
+		    mimeMessage.setContent(htmlMsg.toString(), "text/html");
+		    
+		    // set the subject and recipient of the email
+		    helper.setTo(user.getEmail());
+		    helper.setSubject("WELCOME TO eALLIANZ");
+		    helper.setFrom(from);
+		    
+		    // send the message
+		    mailSender.send(mimeMessage);
+		    
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}	
+	}
+}
+```
+
+
 
 
 

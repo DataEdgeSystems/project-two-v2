@@ -22,7 +22,14 @@ public class UserDAOImpl implements UserDAO {
 	public Boolean add(User user) {	
 		sessionFactory.getCurrentSession().persist(user);		
 		return true;
-	} 
+	}
+	
+	@Override
+	public User get(Long id) {
+		
+		return sessionFactory.getCurrentSession().get(User.class, id);
+		
+	}
 
 	@Override
 	public User findByUsername(String username) {		
@@ -63,4 +70,26 @@ public class UserDAOImpl implements UserDAO {
 		return query.list();
 	}
 
+	
+	/*
+	 * Activate the user
+	 * */
+	@Override
+	public User approveUser(Long id) {		
+		String updateQuery = "UPDATE User SET status = :status, enabled = :enabled WHERE id = :id";
+		Query query = sessionFactory.getCurrentSession().createQuery(updateQuery);
+		query.setParameter("id", id);
+		query.setParameter("status", "APPROVED");
+		query.setParameter("enabled", true);		
+		try {
+			query.executeUpdate();
+			return this.get(id);			
+		}
+		catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}	
+		return null;
+	}
+	
+	
 }

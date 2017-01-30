@@ -5,6 +5,10 @@ import java.util.List;
 import net.kzn.collaborationbackend.entity.User;
 
 public interface UserDAO {
+
+	// get the user
+	User get(Long id);
+	
 	// add a new user
 	Boolean add(User user);
 
@@ -16,5 +20,8 @@ public interface UserDAO {
 	
 	// get the user list for activation
 	List<User> listUserForActivation();
+	
+	
+	User approveUser(Long id);
 	
 }

@@ -103,11 +103,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //	}
 
 	// FOR ALLOWING CORS
-//	@Override
-//	public void configure(WebSecurity web) throws Exception {
-//	  web
-//	    .ignoring()
-//	       .antMatchers(HttpMethod.OPTIONS, "/**"); 
-//	}
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+	  web
+	    .ignoring()
+	       .antMatchers(HttpMethod.OPTIONS, "/**"); 
+	}
 
 }
