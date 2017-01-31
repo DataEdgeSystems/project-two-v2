@@ -1,8 +1,6 @@
 var AdminModule = angular.module('AdminModule', []);
 AdminModule.service('AdminService', ['REST_URI','$http','$q',function(REST_URI,$http,$q) {
 
-
-
     // return the user for activation
     this.getUsersForActivation = function() {
 
@@ -27,7 +25,6 @@ AdminModule.service('AdminService', ['REST_URI','$http','$q',function(REST_URI,$
         $http.put(REST_URI + 'admin/approve-user', id)
         .then(
             function(response) {
-                console.log(response);
                 deferred.resolve(response.data);
             },
             function(error){

@@ -15,12 +15,18 @@ var load = function () {
 
     // to initialize select 
     $('select').material_select();
+
+    // initialize date picker
     $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 100, // Creates a dropdown of 15 years to control year
         format: 'yyyy-mm-dd'
     });
+   
+    
+    // form with pre-filled value to be updated so label is above text-field
     Materialize.updateTextFields(); 
+
 }
 
 

@@ -1,3 +1,9 @@
+Sr. No | Topic | Description
+------------ | ------------- | -------------
+1 | JAVA CONFIGURATION [https://github.com/khozema-nullwala/project-two-v2/wiki/JAVA-CONFIGURATION-(NO-XML)] | In this type of configuration we are avoiding all the XML files that is used for configuration
+2 | DATABASE CONFIGURATION [https://github.com/khozema-nullwala/project-two-v2/wiki/DATABASE-CONFIGURATION-ORACLE-JAR-INSTALLATION] | Installing oracle jar and hibernate configuration 
+3 | EMAIL CONFIGURATION [https://github.com/khozema-nullwala/project-two-v2/wiki/CONFIGURING-AND-SENDING-EMAIL] | Setting up email using gmail account to send email with all the configuration
+
 //---------------------------------------------------------------------------
 ## Steps to start with collaboration backend project
 //---------------------------------------------------------------------------
@@ -472,16 +478,8 @@ http://ng.malsup.com/#!/$parse-and-$eval
 
 
 
-# Sending Email
-
-
-References: -
-
-
-* http://chariotsolutions.com/blog/post/sending-mail-via-gmail-javamail/
-* https://github.com/google/gmail-oauth2-tools/wiki/OAuth2DotPyRunThrough (use python v2.4 or higher not version 3.X)
-* https://www.google.com/settings/security/lesssecureapps
- 1 - First exclude the following dependency from the javaee-api 
+# CONFIGURING AND SENDING EMAIL
+1 - First exclude the following dependency from the javaee-api 
 ```XML	
 	<dependency>
 		<groupId>javax</groupId>
@@ -496,7 +494,7 @@ References: -
 		</exclusions>
 	</dependency>
 ```	 
- 2 - Add the following dependency to the `pom.xml` file
+2 - Add the following dependency to the `pom.xml` file
 ```XML
 	<dependency>
 	    <groupId>javax.mail</groupId>
@@ -516,7 +514,7 @@ References: -
 	    <version>1.5.6</version>
 	</dependency>
 ```  
- 3. Create a class called as `EmailConfig` and add it to the `MvcWebApplicationInitializer`
+3 - Create a class called as `EmailConfig` and add it to the `MvcWebApplicationInitializer`
 ```Java
 import java.util.Properties;
 
@@ -560,7 +558,7 @@ public class MvcWebApplicationInitializer extends AbstractAnnotationConfigDispat
 ...
 }
 ```
-4. In the service package create an EmailService class as shown below
+4 - In the service package create an EmailService class as shown below
 ```Java
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -626,7 +624,10 @@ public class EmailService {
 	}
 }
 ```
+5 - If you are going to use the gmail account make sure to Turn On the less secure apps setting from the following link (https://www.google.com/settings/security/lesssecureapps)[LESS SECURE APPS]
 
+Screen shot for the same for reference
+![LESS SECURE APPS](https://github.com/khozema-nullwala/project-two-v2/blob/master/screenshots/lesssecureapps.png)
 
 
 

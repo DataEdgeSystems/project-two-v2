@@ -42,7 +42,7 @@ public class AuthenticationController {
 			user.setPictureId("staff.png");
 		}
 		else {
-			if(user.getGender().charValue() == 'M'){
+			if(user.getGender() == 'M'){
 				user.setPictureId("male.png");
 			}
 			else {

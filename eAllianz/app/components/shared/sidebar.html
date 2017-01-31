@@ -5,12 +5,15 @@
                 <div class="background">
                     <img ng-src="assets/images/background.png">
                 </div>
-                <a href="#!user"><img class="circle" ng-src="assets/images/{{user.pictureId}}"></a>
-                <a href="#!name"><span class="black-text name">{{user.firstName}} {{user.familyName}}</span></a>
-                <a href="#!email"><span class="black-text email">{{user.email}}</span></a>
+                <div><img class="circle" ng-src="assets/images/{{user.pictureId}}"></div>
+                <div><span class="black-text name">{{user.firstName}} {{user.familyName}}</span></div>
+                <div><span class="black-text email">{{user.email}}</span></div>
+                <a ng-href="#!/edit/profile"><span class="black-text email">Edit Profile</span></a>
             </div>
         </li>
-        <li ng-if="user.role == 'ADMIN'"><a href="#!/admin/user/activate">User Activation</a></li>
+        <li ng-if="user.role == 'ADMIN'">
+            <a href="#!/admin/user/activate">User Activation</a>
+        </li>
         <li ng-if="user.role == 'ADMIN'"><a href="#!">Blog Approval</a></li>
         <li ng-if="user.role == 'ADMIN'"><a href="#!">Forum Creation</a></li>
         <li ng-if="user.role == 'ADMIN'"><a href="#!">Add Events</a></li>

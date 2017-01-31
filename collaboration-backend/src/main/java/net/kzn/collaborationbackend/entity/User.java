@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "user_details")
 public class User implements Serializable {
@@ -48,7 +50,8 @@ public class User implements Serializable {
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	@Column(name = "birth_date")	
+	@Column(name = "birth_date")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate birthDate;
 
 	@Column(name = "enabled")
@@ -64,13 +67,13 @@ public class User implements Serializable {
 	private Boolean isOnline;
 	
 	@Column(name = "gender")
-	private Character gender;
+	private char gender;
 			
-	public Character getGender() {
+	public char getGender() {
 		return gender;
 	}
 
-	public void setGender(Character gender) {
+	public void setGender(char gender) {
 		this.gender = gender;
 	}
 

@@ -1,0 +1,86 @@
+<div class="left-padding">
+
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="card blue darken-3">
+                <div class="card-content white-text">
+                    <form role="form" name="register" ng-submit="register.$valid && userCtrl.update()" id="register" novalidate="novalidate">
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input type="text" class="validate" id="firstName" name="firstName" ng-model="userCtrl.user.firstName" required />
+                                <label for="firstName">First Name</label>
+                                <div class="invalid-data right-align" ng-show="register.firstName.$dirty">
+                                    <span ng-show="register.firstName.$invalid">Please enter First Name!</span>
+                                </div>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input type="text" id="familyName" name="familyName" ng-model="userCtrl.user.familyName" required/>
+                                <label for="familyName">Family Name</label>
+                                <div class="invalid-data right-align" ng-show="register.familyName.$dirty">
+                                    <span ng-show="register.familyName.$invalid">Please enter Last Name!</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">                        
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">call</i>
+                                <input type="text" id="phone" name="phone" ng-model="userCtrl.user.phone" required ng-pattern="/^[0-9]{10}$/"/>
+                                <label for="phone">Contact Number</label>
+                                <div class="invalid-data right-align" ng-show="register.phone.$dirty">                                    
+                                    <span ng-show="register.phone.$invalid">Please enter valid phone number!</span>
+                                </div>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">date_range</i>
+                                <input type="text" id="birthDate" name="birthDate" ng-model="userCtrl.user.birthDate" required class="datepicker"/>
+                                <label for="birthDate">Birth Date</label>
+                                <div class="invalid-data right-align" ng-show="register.birthDate.$dirty">                         
+                                    <span ng-show="register.birthDate.$invalid">Please enter valid birth date!</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">                        
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">account_box</i>
+                                <select name="gender" id="gender" ng-model="userCtrl.user.gender" ng-required="true">                                   
+                                    <option value="M">MALE</option>
+                                    <option value="F">FEMALE</option>                                    
+                                </select>
+                                <label for="gender">Gender</label>
+                                <div class="invalid-data right-align" ng-show="register.gender.$dirty">
+                                    <span ng-show="register.gender.$touched && register.gender.$invalid">Please select your gender!</span>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12 m12 l12 center-align">
+                                <button class="btn grey waves-effect waves-light" type="submit" ng-disabled="register.$invalid">Register</button>
+                            </div>
+                        </div>                        
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--Changing the profile picture-->
+        <div class="col s12 m6">
+             <div class="card blue darken-3">
+                <div class="card-content white-text">
+                    <span class="card-title white-text logo">Change Profile Picture</span>
+                    <div class="row center-align">
+                        <img class="circle" ng-src="assets/images/{{userCtrl.user.pictureId}}">
+                    </div>
+                    <div class="row center-align">
+                        <input type = "file" file-model = "userCtrl.picture"/>
+                        <button ng-click = "userCtrl.uploadFile()">Change Picture</button>                        
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
+</div>

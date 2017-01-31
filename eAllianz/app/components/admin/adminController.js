@@ -8,8 +8,7 @@ AdminModule.controller('AdminController',['AdminService','$rootScope','$timeout'
     me.getUsersForActivation = function() {
         AdminService.getUsersForActivation()
         .then(
-            function(users) {
-                console.log(users);
+            function(users) {                
                 me.users = users;
             },
             function(error) {
@@ -18,15 +17,13 @@ AdminModule.controller('AdminController',['AdminService','$rootScope','$timeout'
         );
     }
 
-    // call the method to get the users for activation
-    me.getUsersForActivation();
-
     me.approveUser = function(userId) {
         //console.log(userId);
         AdminService.approveUser(userId)
         .then(
             function(response) {                
                 $rootScope.message = response.message;
+                me.getUsersForActivation();
             },
             function(error) {
                 $rootScope.message = error.message;

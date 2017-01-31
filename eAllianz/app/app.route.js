@@ -50,6 +50,13 @@ window.routes =
         requireLogin: true,
         roles: ['USER','ADMIN']
     },
+    "/edit/profile": {
+        templateUrl: 'app/components/user/editProfile.html', 
+        controller: 'UserController', 
+        controllerAs: 'userCtrl',
+        requireLogin: true,
+        roles: ['USER','ADMIN','STAFF']
+    }
     
 };
 
