@@ -90,6 +90,22 @@ public class UserDAOImpl implements UserDAO {
 		}	
 		return null;
 	}
+
+	@Override
+	public boolean updateUserPictureId(String fileName, Long id) {
+		String updateQuery = "UPDATE User SET pictureId = :fileName WHERE id = :id";
+		Query query = sessionFactory.getCurrentSession().createQuery(updateQuery);
+		query.setParameter("id", id);
+		query.setParameter("fileName", fileName);
+		try {
+			query.executeUpdate();
+			return true;
+		}
+		catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}	
+		return false;
+	}
 	
 	
 }

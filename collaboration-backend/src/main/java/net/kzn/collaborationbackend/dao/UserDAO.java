@@ -21,7 +21,11 @@ public interface UserDAO {
 	// get the user list for activation
 	List<User> listUserForActivation();
 	
-	
+	// for updating the use status as approved
 	User approveUser(Long id);
+	
+	// for changing the profile picture
+	boolean updateUserPictureId(String fileName, Long id);
+	
 	
 }

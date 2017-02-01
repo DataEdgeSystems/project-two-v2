@@ -630,9 +630,296 @@ Screen shot for the same for reference
 ![LESS SECURE APPS](https://github.com/khozema-nullwala/project-two-v2/blob/master/screenshots/lesssecureapps.png)
 
 
+# FILE UPLOAD
+### BACKEND
+1 - To upload the file we have to add the following dependencies in the backend application
+```XML
+	<!-- For file upload -->
+	<dependency>
+		<groupId>commons-fileupload</groupId>
+		<artifactId>commons-fileupload</artifactId>
+		<version>1.3.2</version>
+	</dependency>
+	<dependency>
+		<groupId>commons-io</groupId>
+		<artifactId>commons-io</artifactId>
+		<version>2.5</version>
+	</dependency>
+```
+2 - Create a separate config.properties file in the src->main->resources directory and add your directory path of the front-end project so that we can dynamically see the updates happening. The content of the config.properties is shown below
+```Java
+imageBasePath = D:/khozema/DigitalTransformation/project-two-v2/eAllianz/assets/images/
+```
+``` 
+3 - Create a model as `Response` class that will be used to send success or failed message that would be used where we are submitting the data asynchronously and not using any entity class.   
+```Java
+public class Response {
+	private int code;
+	private String message;
 
+	public int getCode() {
+		return code;
+	}
 
+	public void setCode(int code) {
+		this.code = code;
+	}
 
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}	
+```
+
+4 - Add another `UploadController` that would be used for uploading the file
+```Java
+import java.io.File;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import net.kzn.collaborationbackend.dao.UserDAO;
+import net.kzn.onlinecollaboration.model.Response;
+
+@RestController
+@RequestMapping("/upload")
+@PropertySource("classpath:config.properties")
+public class UploadController {
+
+	@Autowired 
+	private UserDAO userDAO;
+	
+	// this is an absolute path since we are using two different servers based on project requirement 
+	// we are able to upload the image at the desired location important thing to note is we are 
+	// able to sent the multipart file from the front end that is written purely in angular js
+	// the image could have been stored in the back end server but then we need to have many
+	// request
+	
+	@Value("${imageBasePath}")
+	private String imageBasePath;
+	
+	/*
+	 * Using post mapping for uploading the file 
+	 * 
+	 * */
+	
+	@PostMapping("/profile-picture")
+	public ResponseEntity<Response> uploadProfilePicture(@RequestParam("file") MultipartFile file, @RequestParam("id") Long id) {
+		
+		String message = null;
+
+		// We would be using the USER_PROFILE as a prefix so that we can use other prefix 
+		// for other kind of upload such as event which may have id auto-generated
+		String fileName = "USER_PROFILE_" + id + ".png";			
+		
+		if(uploadFile(imageBasePath, fileName, file)){
+
+			// update the picture id in the database table by using userDAO
+			userDAO.updateUserPictureId(fileName, id);
+			
+			//in the response the filename of the new image will be send			
+			return new ResponseEntity<Response>(new Response(1,fileName),HttpStatus.OK);			
+		}
+		else {
+			message = "Failed to update the profile picture!";
+			return new ResponseEntity<Response>(new Response(0,message),HttpStatus.NOT_FOUND);
+		}		
+		
+	}
+
+	/**
+	 * 
+	 * uploadFile method has three parameters
+	 * directory - where to upload
+	 * fileName - that will be used for naming the uploaded file
+	 * file - the file to upload
+	 *  
+	 * */
+
+	private boolean uploadFile(String directory, String fileName,  MultipartFile file) {		
+		
+		// Create the directory if does not exists
+		if(!new File(directory).exists()) {
+			new File(directory).mkdirs();
+		}		
+		
+		try {			
+			// transfer the file
+			file.transferTo(new File(directory + fileName));
+			// file uploaded successfully 
+			return true;
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+				
+		return false;				
+	}
+	
+	//To resolve ${} in @Value
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }   
+		
+}
+```
+5 - In the application initializer register the MultipartConfig element in the following method
+```Java
+
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+		 // upload temp file will put here
+        File uploadDirectory = new File(System.getProperty("java.io.tmpdir"));
+
+        // register a MultipartConfigElement
+        MultipartConfigElement multipartConfigElement =
+                new MultipartConfigElement(uploadDirectory.getAbsolutePath(),
+                        maxUploadSizeInMb, maxUploadSizeInMb * 2, maxUploadSizeInMb / 2);
+				
+		registration.setMultipartConfig(multipartConfigElement);
+		super.customizeRegistration(registration);
+	}
+
+``` 
+6 - Create a bean in the MvcConfig (or any class where @Configuration is used for configuration) 
+```Java
+	// Note: if you are using multipartResolver as method name no need for assigning any name to Bean
+	// it will be used automatically wherever required
+
+    @Bean
+    public MultipartResolver multipartResolver() {
+        return new CommonsMultipartResolver();
+    }	 
+```   
+
+### FRONTEND
+7 - In the front end application using angular js we have to create a separate directive for input with type file as ngModel does not work with it.
+```Javascript
+// change MyModule with your module name used within the application
+MyModule.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            console.log(model);
+            var modelSetter = model.assign;
+            element.bind('change', function () {
+                scope.$apply(function () {
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
+```
+8 - Add a constant in the root module defining the REST_URI that will be used as a base for connecting with the back end server
+```Javascript
+app.constant('REST_URI', 'http://localhost:8080/collaboration-backend/');
+``` 
+9 - Create a service for uploading the file as shown below
+```Javascript
+MyModule.service('UploadService',['$q','$http','$rootScope','REST_URI', function ($q,$http, $rootScope,REST_URI) {
+
+    // uploadFile function to upload the image on the server
+    this.uploadFile = function (file) {
+
+        var deferred = $q.defer();
+
+        // NOTE: the 'Content-Type' is undefined to add a boundary between the multipart content
+        // and other data content which is added automatically thats why here we don't use 
+                
+        var fd = new FormData();
+        fd.append('file', file);
+        // send the user id which can be used to update the usera
+        // and to set the file name
+        fd.append('id', $rootScope.user.id);
+        $http.post(REST_URI + 'upload/profile-picture', fd, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined }
+        })
+        .then(
+            function (response) {
+                deferred.resolve(response.data);
+            },
+            function (error) {
+                console.log(error);
+                deferred.reject(error);
+            }
+        );
+        return deferred.promise;
+    }
+
+}]);
+```
+10 - In the controller we would be using the UploadService created above for working with our HTML file. The important thing to note is how the UploadService is called.
+```Javascript
+// all the other service that will be injected you can write at ...
+MyModule.controller('UploadController', ['UploadService','AuthenticationService','$rootScope', '$scope' , '$timeout', function (UserService, AuthenticationService, $rootScope, $scope ,$timeout) {
+
+    var me = this;
+    // load the user stored inside the cookie
+    me.user = AuthenticationService.loadUserFromCookie();    
+    var date = new Date(me.user.birthDate.year, me.user.birthDate.monthValue - 1, me.user.birthDate.dayOfMonth + 1).toISOString().slice(0, 10);
+    me.user.birthDate = date;
+    me.picture = undefined;
+
+    // the decached technique is used to see the updated image immediately with out page refresh
+    me.user.pictureId = me.user.pictureId + '?decached=' + Math.random(); 
+
+    // once the controller loads call the jQuery
+    $timeout(function () {
+        load();
+    }, 100);
+
+    // to upload the file    
+    me.uploadFile = function () {
+        
+        if(me.picture == undefined) {
+            return;
+        }    
+    	// me.picture will get the value from the directive created previously
+    	// it is bind to the HTML input  
+        UploadService.uploadFile(me.picture)
+        .then(
+            function(response){
+                $rootScope.message = 'Profile picture updated successfully!';
+                //message contains the pictureId updated in the backend too
+                me.user.pictureId = response.message + '?decached=' + Math.random();
+                // update the controller user too
+                $rootScope.user.pictureId = response.message + '?decached=' + Math.random();
+                // need to update the cookie value too
+                AuthenticationService.saveUser($rootScope.user);
+
+                // hide the card panel by setting the rootScope.message as undefined
+                $timeout(function() {                    
+                    $rootScope.message = undefined;
+                },2000);
+
+            },
+            function(error){
+                console.log(error);
+            } 
+        )
+    };
+}]);
+```
+11 - Screen shot for reference 
+![PROFILE UPDATE 01](https://github.com/khozema-nullwala/project-two-v2/blob/master/screenshots/profilepicture_01.png)
+![PROFILE UPDATE 02](https://github.com/khozema-nullwala/project-two-v2/blob/master/screenshots/profilepicture_02.png)
 
 
 

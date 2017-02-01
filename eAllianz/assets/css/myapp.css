@@ -82,4 +82,8 @@ input.ng-dirty.ng-valid {
     border-bottom: 1px solid #fff;
     box-shadow: 0 1px 0 0 #fff;
 }
-    
+
+.profile-picture {
+    width: 200px;
+    height: 200px;
+}

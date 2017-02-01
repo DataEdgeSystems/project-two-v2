@@ -58,8 +58,7 @@ AuthenticationModule.service('AuthenticationService',['$http','$q','$cookies','R
             data: credentials
         }).then(
             // success callback
-            function(response){
-                console.log(response.date)
+            function(response){                
                 deferred.resolve(response.data)
             },
             // error callback

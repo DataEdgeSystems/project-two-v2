@@ -1,5 +1,9 @@
-var UserModule = angular.module('UserModule', []);
+// User module is dependend on the AuthenticationModule 
+// which allows to update the cookie value
+var UserModule = angular.module('UserModule', ['AuthenticationModule']);
 
+//ng-model doesn't work with input[type='file'] that;s why we have to create a custom directive
+// the name of the directive is fileModel so we have to use file-model in the HTML
 UserModule.directive('fileModel', ['$parse', function ($parse) {
     return {
         restrict: 'A',
@@ -9,18 +13,28 @@ UserModule.directive('fileModel', ['$parse', function ($parse) {
             var modelSetter = model.assign;
             element.bind('change', function () {
                 scope.$apply(function () {
-                    modelSetter(scope, element[0].files[0]);
+                    modelSetter(scope, element[0].files[0]);                    
                 });
             });
         }
     };
 }]);
 
-UserModule.service('UserService',['$http','$rootScope','REST_URI', function ($http, $rootScope,REST_URI) {
+// Service that contains the file upload function
+UserModule.service('UserService',['$q','$http','$rootScope','REST_URI', function ($q,$http, $rootScope,REST_URI) {
 
+    // uploadFile function to upload the image on the server
     this.uploadFile = function (file) {
+
+        var deferred = $q.defer();
+
+        // NOTE: the 'Content-Type' is undefined to add a boundary between the multipart content
+        // and other data content which is added automatically thats why here we don't use 
+                
         var fd = new FormData();
         fd.append('file', file);
+        // send the user id which can be used to update the usera
+        // and to set the file name
         fd.append('id', $rootScope.user.id);
         $http.post(REST_URI + 'upload/profile-picture', fd, {
             transformRequest: angular.identity,
@@ -28,10 +42,14 @@ UserModule.service('UserService',['$http','$rootScope','REST_URI', function ($ht
         })
         .then(
             function (response) {
-                console.log(response.message);
+                deferred.resolve(response.data);
             },
-            function () {}
+            function (error) {
+                console.log(error);
+                deferred.reject(error);
+            }
         );
+        return deferred.promise;
     }
 
 }]);

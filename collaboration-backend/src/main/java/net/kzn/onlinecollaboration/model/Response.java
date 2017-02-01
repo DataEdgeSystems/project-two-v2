@@ -1,14 +1,11 @@
 package net.kzn.onlinecollaboration.model;
 
 public class Response {
-
 	private int code;
 	private String message;
 	private SecurityError error;
 
-	public Response() {
-
-	}
+	public Response() {}
 
 	public Response(int code, String message, SecurityError error) {
 		super();
