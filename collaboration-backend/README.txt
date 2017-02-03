@@ -917,7 +917,31 @@ MyModule.controller('UploadController', ['UploadService','AuthenticationService'
     };
 }]);
 ```
-11 - Screen shot for reference 
+11 - Here is the sample html code for reference
+```HTML
+<div class="card blue darken-3">
+	<div class="card-content white-text">
+	    <span class="card-title white-text logo">Change Profile Picture</span>
+	    <div class="row center-align">
+	        <img class="circle profile-picture" ng-src="assets/images/{{userCtrl.user.pictureId}}">
+	    </div>
+	    <div class="row center-align">
+	
+	        <div class="file-field input-field">
+	            <div class="btn grey">
+	                <span>File</span>
+	                <input type="file" file-model="userCtrl.picture">
+	            </div>
+	            <div class="file-path-wrapper">
+	                <input class="file-path validate" type="text">
+	            </div>
+	        </div>
+	        <button class="btn grey waves-effect waves-light" ng-click="userCtrl.uploadFile()">Change Picture</button>
+	    </div>
+	</div>
+</div>
+```
+12 - Screen shot for reference 
 ![PROFILE UPDATE 01](https://github.com/khozema-nullwala/project-two-v2/blob/master/screenshots/profilepicture_01.png)
 ![PROFILE UPDATE 02](https://github.com/khozema-nullwala/project-two-v2/blob/master/screenshots/profilepicture_02.png)
 

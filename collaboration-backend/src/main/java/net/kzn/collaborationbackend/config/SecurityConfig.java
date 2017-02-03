@@ -51,7 +51,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-	    auth.userDetailsService(securityUserDetailsService);
+	    //auth.userDetailsService(securityUserDetailsService);
+		
+		// uncomment the above line to work with userdetails service
+		auth.inMemoryAuthentication()
+	    .withUser("admin").password("admin").roles("ADMIN");		
+	   	    
 	}	
 			
 	@Override
@@ -71,9 +76,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     			.authenticationEntryPoint(restUnauthorizedEntryPoint)
     			.accessDeniedHandler(restAccessDeniedHandler)
         .and()
-        	.formLogin()
-        		.successHandler(restAuthenticationSuccessHandler)
-        		.failureHandler(restAuthenticationFailureHandler)
+        	.httpBasic()
+//        	.formLogin()
+//        		.successHandler(restAuthenticationSuccessHandler)
+//        		.failureHandler(restAuthenticationFailureHandler)
 //        .and()
 //        	.csrf().csrfTokenRepository(csrfTokenRepository())
         .and()
