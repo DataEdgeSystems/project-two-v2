@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,7 @@ public class FriendDAOImpl implements FriendDAO {
 	@Override
 	public List<Long> getFriendId(Long initiatorId) {
 		String selectFriendId = "SELECT friend_id FROM friend_list WHERE initiator_id = :initiatorId AND status = 'ACCEPTED'";
-		Query query = sessionFactory.getCurrentSession().createNativeQuery(selectFriendId);
+		Query query = sessionFactory.getCurrentSession().createNativeQuery(selectFriendId).addScalar("friend_id", StandardBasicTypes.LONG);
 		query.setParameter("initiatorId", initiatorId);
 		
 		return query.getResultList();
@@ -32,7 +33,7 @@ public class FriendDAOImpl implements FriendDAO {
 	@Override
 	public List<Long> getInitiatorId(Long friendId) {
 		String selectFriendId = "SELECT initiator_id FROM friend_list WHERE friend_id = :friendId AND status = 'ACCEPTED'";
-		Query query = sessionFactory.getCurrentSession().createNativeQuery(selectFriendId);		
+		Query query = sessionFactory.getCurrentSession().createNativeQuery(selectFriendId).addScalar("initiator_id", StandardBasicTypes.LONG);		
 		query.setParameter("friendId", friendId);		
 		return query.getResultList();
 	}
@@ -48,7 +49,7 @@ public class FriendDAOImpl implements FriendDAO {
 
 		return friends;
 	}
-
+	
 	@Override
 	public boolean updateFriendList(Long initiatorId, Long friendId, String status) {
 		// TODO Auto-generated method stub
